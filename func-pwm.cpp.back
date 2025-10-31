@@ -1,0 +1,67 @@
+#include "func-pwm.h"
+
+static int sysClk = 125000000; 
+static int pwmPin[4] = {2, 3, 6, 7}; //1A, 1B, 3A, 3B, pin:PWM 0, 1, 2, 3
+static int pwmSlice[2] = {1,3};
+		
+static int pwmFreq[4] = {	500, 
+													500, 
+													500, 
+													500 };
+static pwm_config pwm_slice_config[4];
+uint pwm_slice_num[2] = {	pwm_gpio_to_slice_num(pwmSlice[0]),
+													pwm_gpio_to_slice_num(pwmSlice[1]) };
+
+int pico_pwm::setup(void){
+	int pwmWrap[2] = {sysClk/pwmFreq[0], 
+										sysClk/pwmFreq[1]};
+
+	gpio_set_function(pwmPin[0], GPIO_FUNC_PWM);
+	gpio_set_function(pwmPin[1], GPIO_FUNC_PWM);
+	gpio_set_function(pwmPin[2], GPIO_FUNC_PWM);
+	gpio_set_function(pwmPin[3], GPIO_FUNC_PWM);
+
+	pwm_slice_config[0] = pwm_get_default_config();
+	pwm_slice_config[1] = pwm_get_default_config();
+
+	pwm_set_clkdiv(pwm_slice_num[0], 10.0);
+	pwm_set_clkdiv(pwm_slice_num[1], 10.0);
+
+	pwm_set_wrap(pwm_slice_num[0], 24999);
+	pwm_set_wrap(pwm_slice_num[1], 24999);
+
+//	pwm_config_set_wrap(&pwm_slice_config[0], pwmWrap[0]);
+//	pwm_config_set_wrap(&pwm_slice_config[1], pwmWrap[1]);
+	
+//	pwm_config_set_clkdiv(&pwm_slice_config[0], 10);
+//	pwm_config_set_clkdiv(&pwm_slice_config[1], 10);
+
+	pwm_set_chan_level(pwm_slice_num[0], PWM_CHAN_A, 20000);
+	pwm_set_chan_level(pwm_slice_num[0], PWM_CHAN_B, 4000);
+	pwm_set_chan_level(pwm_slice_num[1], PWM_CHAN_A, 3000);
+	pwm_set_chan_level(pwm_slice_num[1], PWM_CHAN_B, 2000);
+
+	pwm_set_enabled(pwm_slice_num[0], true);
+	pwm_set_enabled(pwm_slice_num[1], true);
+
+
+//	pwm_init( pwm_slice_num[0], &pwm_slice_config[0], true );
+//	pwm_init( pwm_slice_num[1], &pwm_slice_config[1], true );
+
+	//pwm_set_gpio_level(pwmPin[0], (pwm_slice_config[0].top*0.5));
+	//pwm_set_gpio_level(pwmPin[1], (pwm_slice_config[1].top*0.5));
+
+	return 0;
+};
+
+int pico_pwm::duty(uint pinNum, double duty){
+//	if(duty > 1 || duty < 0){
+//		return 1;
+//	}
+//	else{
+		pwm_set_gpio_level(pwmPin[pinNum], (pwm_slice_config[0].top*duty));
+		//pwm_set_chan_level(pwm_slice_num[slice], chan, duty);
+		//pwm_set_gpio_level(pwmPin[0], (pwm_slice_config[0].top*0.5));
+		return 0;
+//	}
+};

@@ -1,0 +1,5 @@
+/home/raven/pico/works/Milvus-EM-pico2/build/pioasm-install/pioasm/pioasm
+/home/raven/pico/works/Milvus-EM-pico2/build/pioasm-install/pioasm/pioasmTargets.cmake
+/home/raven/pico/works/Milvus-EM-pico2/build/pioasm-install/pioasm/pioasmTargets-release.cmake
+/home/raven/pico/works/Milvus-EM-pico2/build/pioasm-install/pioasm/pioasmConfig.cmake
+/home/raven/pico/works/Milvus-EM-pico2/build/pioasm-install/pioasm/pioasmConfigVersion.cmake

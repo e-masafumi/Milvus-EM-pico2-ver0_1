@@ -1,0 +1,3 @@
+/home/raven/pico/works/AUV-BBM/blink/pioasm/CMakeFiles/rebuild_cache.dir
+/home/raven/pico/works/AUV-BBM/blink/pioasm/CMakeFiles/edit_cache.dir
+/home/raven/pico/works/AUV-BBM/blink/pioasm/CMakeFiles/pioasm.dir

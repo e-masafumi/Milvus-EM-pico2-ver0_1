@@ -1,0 +1,7 @@
+/home/raven/pico/works/Milvus-EM-pico2/build/pioasm/CMakeFiles/pioasm.dir
+/home/raven/pico/works/Milvus-EM-pico2/build/pioasm/CMakeFiles/edit_cache.dir
+/home/raven/pico/works/Milvus-EM-pico2/build/pioasm/CMakeFiles/rebuild_cache.dir
+/home/raven/pico/works/Milvus-EM-pico2/build/pioasm/CMakeFiles/list_install_components.dir
+/home/raven/pico/works/Milvus-EM-pico2/build/pioasm/CMakeFiles/install.dir
+/home/raven/pico/works/Milvus-EM-pico2/build/pioasm/CMakeFiles/install/local.dir
+/home/raven/pico/works/Milvus-EM-pico2/build/pioasm/CMakeFiles/install/strip.dir
