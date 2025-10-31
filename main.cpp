@@ -28,6 +28,8 @@
 #include "ff.h"
 #include "sd_card.h"
 #include "pio_uart.hpp"
+#include "uart_dma.hpp"
+#include "func-parsing.hpp"
 
 #define CORE1_HELLO   (99999)
 #define LOG_WRITE_COM   (12345)
@@ -95,13 +97,18 @@ double uartReceiveData;
 
 struct str_sensorsData logData;
 struct str_NMEA decodedNMEA;
-struct str_ULSA decodedULSA;
+
+extern str_ULSA decodedULSA;
 
 
 constexpr int LINE_MAX = 256;
 constexpr int QSIZE    = 16;
 static char q[QSIZE][LINE_MAX];
 static volatile uint8_t q_w=0, q_r=0;
+
+static UartRxDma g_gnss;             // UARTを1本だけDMA化
+static uint8_t  g_ring[2048];        // 2^n
+
 
 bool reserved_addr(uint8_t addr){
     return (addr & 0x78) == 0 || (addr & 0x78) == 0x78;
@@ -123,7 +130,7 @@ bool fifo_push(const char* s){
     q[q_w][LINE_MAX-1]='\0';
     q_w=n; return true;
 }
-
+/*
 void parseCsvULSA(const char* line) {
   // もし '#' で始まっていたらスキップするだけ
 	if (line[0] == '#') line++;
@@ -170,7 +177,7 @@ void parseCsvULSA(const char* line) {
     token = strtok(nullptr, ",");  // 次のカンマ区切りへ
   }
 }
-
+*/
 
 
 void core1_main(void){
@@ -247,18 +254,41 @@ void core1_main(void){
 		while (true);
 	}
 
-
+	uart_rx_dma_init(g_gnss, uart1, g_ring, sizeof(g_ring), 115200);
 
 	multicore_fifo_push_blocking(CORE1_HELLO);
 
 	printf("SPI Baudrate = %d\n\n", spi_get_baudrate(spi0));
-	
+	static uint8_t tmp[256];	
+
 	while(1){
-		
+		size_t n = uart_rx_dma_read(g_gnss, tmp, sizeof(tmp));
 		static uint32_t core1preTime;
 		static uint32_t core1postTime;
 
 		uint32_t logWriteCom = multicore_fifo_pop_blocking();
+		size_t n = uart_rx_dma_read(uart_gnss, buf, sizeof(buf));
+		if (n) {
+			for (size_t i = 0; i < n; i++) {
+				char c = buf[i];
+        if (c == '\n') {
+					linebuf[linelen] = '\0'; // 1行終端
+ //         gnss_parse_nmea(linebuf); // ← ここでNMEAデコード
+          linelen = 0;              // バッファをリセット
+        }
+				else if (linelen < sizeof(linebuf) - 1) {
+					linebuf[linelen++] = c;   // 継続して積み上げ
+        } 
+				else {
+					// オーバーフロー防止（長すぎたらリセット）
+          linelen = 0;
+        }
+      }
+    }
+		
+		//tight_loop_contents();  // 他処理にCPU譲渡（省電力）
+
+
 		if(!(logWriteCom == LOG_WRITE_COM)){
 			continue;
 		}
@@ -520,32 +550,32 @@ int main(){
 			}
 		}	   
 		
-		if(messageFinishFlag == true){
-			messageFinishFlag = false;
-			onBoardLED = !onBoardLED;
-			gpio_put(LED_PIN, onBoardLED);
-			if((readNMEA[0][2] == 'G') && (readNMEA[0][3] == 'G') && (readNMEA[0][4] == 'A')){
-				decodedNMEA.time = atof(readNMEA[1]);
+//		if(messageFinishFlag == true){
+//			messageFinishFlag = false;
+//			onBoardLED = !onBoardLED;
+//			gpio_put(LED_PIN, onBoardLED);
+//			if((readNMEA[0][2] == 'G') && (readNMEA[0][3] == 'G') && (readNMEA[0][4] == 'A')){
+//				decodedNMEA.time = atof(readNMEA[1]);
 				
-				decodedNMEA.latitude = atof(readNMEA[2]);
-				nmeaBuff = decodedNMEA.latitude/100;
-				decodedNMEA.latitude = (int)nmeaBuff + (nmeaBuff-(int)nmeaBuff)/60;
-				decodedNMEA.nOrS = readNMEA[3][0];
+//				decodedNMEA.latitude = atof(readNMEA[2]);
+//				nmeaBuff = decodedNMEA.latitude/100;
+//				decodedNMEA.latitude = (int)nmeaBuff + (nmeaBuff-(int)nmeaBuff)/60;
+//				decodedNMEA.nOrS = readNMEA[3][0];
 				
-				decodedNMEA.longitude = atof(readNMEA[4]);
-				nmeaBuff = decodedNMEA.longitude/100;
-				decodedNMEA.latitude = (int)nmeaBuff + (nmeaBuff-(int)nmeaBuff)/60;
-				decodedNMEA.eOrW = readNMEA[5][0];
-				decodedNMEA.qual = atoi(readNMEA[6]);
-				decodedNMEA.sats = atoi(readNMEA[7]);
-				decodedNMEA.hdop = atof(readNMEA[8]);
-				decodedNMEA.altitudeASL = atof(readNMEA[9]);
-				decodedNMEA.altitudeGeoid = atof(readNMEA[11]);
-			}
-		}
+//				decodedNMEA.longitude = atof(readNMEA[4]);
+//				nmeaBuff = decodedNMEA.longitude/100;
+//				decodedNMEA.latitude = (int)nmeaBuff + (nmeaBuff-(int)nmeaBuff)/60;
+//				decodedNMEA.eOrW = readNMEA[5][0];
+//				decodedNMEA.qual = atoi(readNMEA[6]);
+//				decodedNMEA.sats = atoi(readNMEA[7]);
+//				decodedNMEA.hdop = atof(readNMEA[8]);
+//				decodedNMEA.altitudeASL = atof(readNMEA[9]);
+//				decodedNMEA.altitudeGeoid = atof(readNMEA[11]);
+//			}
+//		}
 
-		if(decodedNMEA.qual <= 1){
-		}
+//		if(decodedNMEA.qual <= 1){
+//		}
 
 		if(exeFlag == false){
 			continue;

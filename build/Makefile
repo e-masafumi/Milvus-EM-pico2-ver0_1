@@ -182,19 +182,6 @@ bs2_default_library/fast:
 .PHONY : bs2_default_library/fast
 
 #=============================================================================
-# Target rules for targets named pioasmBuild
-
-# Build rule for target.
-pioasmBuild: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pioasmBuild
-.PHONY : pioasmBuild
-
-# fast build rule for target.
-pioasmBuild/fast:
-	$(MAKE) $(MAKESILENT) -f pico-sdk/src/rp2_common/pico_cyw43_driver/CMakeFiles/pioasmBuild.dir/build.make pico-sdk/src/rp2_common/pico_cyw43_driver/CMakeFiles/pioasmBuild.dir/build
-.PHONY : pioasmBuild/fast
-
-#=============================================================================
 # Target rules for targets named cyw43_driver_picow_cyw43_bus_pio_spi_pio_h
 
 # Build rule for target.
@@ -328,6 +315,30 @@ func-i2c.s: func-i2c.cpp.s
 func-i2c.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/func-i2c.cpp.s
 .PHONY : func-i2c.cpp.s
+
+func-parsing.o: func-parsing.cpp.o
+.PHONY : func-parsing.o
+
+# target to build an object file
+func-parsing.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/func-parsing.cpp.o
+.PHONY : func-parsing.cpp.o
+
+func-parsing.i: func-parsing.cpp.i
+.PHONY : func-parsing.i
+
+# target to preprocess a source file
+func-parsing.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/func-parsing.cpp.i
+.PHONY : func-parsing.cpp.i
+
+func-parsing.s: func-parsing.cpp.s
+.PHONY : func-parsing.s
+
+# target to generate assembly for a file
+func-parsing.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/func-parsing.cpp.s
+.PHONY : func-parsing.cpp.s
 
 func-pwm.o: func-pwm.cpp.o
 .PHONY : func-pwm.o
@@ -2918,7 +2929,6 @@ help:
 	@echo "... main_uart_rx_pio_h"
 	@echo "... no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h"
 	@echo "... pico_status_led_ws2812_pio_h"
-	@echo "... pioasmBuild"
 	@echo "... bs2_default"
 	@echo "... bs2_default_library"
 	@echo "... main"
@@ -2934,6 +2944,9 @@ help:
 	@echo "... func-i2c.o"
 	@echo "... func-i2c.i"
 	@echo "... func-i2c.s"
+	@echo "... func-parsing.o"
+	@echo "... func-parsing.i"
+	@echo "... func-parsing.s"
 	@echo "... func-pwm.o"
 	@echo "... func-pwm.i"
 	@echo "... func-pwm.s"

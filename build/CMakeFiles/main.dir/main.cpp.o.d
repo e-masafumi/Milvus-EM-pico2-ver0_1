@@ -408,4 +408,6 @@ CMakeFiles/main.dir/main.cpp.o: \
  /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/sd_driver/sd_card_constants.h \
  /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/sd_driver/sd_regs.h \
  /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/include/util.h \
- /home/raven/pico/works/Milvus-EM-pico2-ver0_1/pio_uart.hpp
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/pio_uart.hpp \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/uart_dma.hpp \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-parsing.hpp

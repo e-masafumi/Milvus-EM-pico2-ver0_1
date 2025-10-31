@@ -270,6 +270,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-INA228.cpp" "CMakeFiles/main.dir/func-INA228.cpp.o" "gcc" "CMakeFiles/main.dir/func-INA228.cpp.o.d"
   "/home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-MS5837-02BA.cpp" "CMakeFiles/main.dir/func-MS5837-02BA.cpp.o" "gcc" "CMakeFiles/main.dir/func-MS5837-02BA.cpp.o.d"
   "/home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-i2c.cpp" "CMakeFiles/main.dir/func-i2c.cpp.o" "gcc" "CMakeFiles/main.dir/func-i2c.cpp.o.d"
+  "/home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-parsing.cpp" "CMakeFiles/main.dir/func-parsing.cpp.o" "gcc" "CMakeFiles/main.dir/func-parsing.cpp.o.d"
   "/home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-pwm.cpp" "CMakeFiles/main.dir/func-pwm.cpp.o" "gcc" "CMakeFiles/main.dir/func-pwm.cpp.o.d"
   "/home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-uart.cpp" "CMakeFiles/main.dir/func-uart.cpp.o" "gcc" "CMakeFiles/main.dir/func-uart.cpp.o.d"
   "/home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-usbuart.cpp" "CMakeFiles/main.dir/func-usbuart.cpp.o" "gcc" "CMakeFiles/main.dir/func-usbuart.cpp.o.d"

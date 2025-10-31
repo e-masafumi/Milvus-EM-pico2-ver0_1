@@ -19,6 +19,7 @@ add_executable(main
 	func-INA228.cpp
 	hw_config.c
 	pio_uart.cpp
+	func-parsing.cpp
 )
 
 pico_generate_pio_header(main ${CMAKE_CURRENT_LIST_DIR}/uart_rx.pio)

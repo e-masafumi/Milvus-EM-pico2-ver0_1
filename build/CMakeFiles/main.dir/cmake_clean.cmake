@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/main.dir/func-MS5837-02BA.cpp.o.d"
   "CMakeFiles/main.dir/func-i2c.cpp.o"
   "CMakeFiles/main.dir/func-i2c.cpp.o.d"
+  "CMakeFiles/main.dir/func-parsing.cpp.o"
+  "CMakeFiles/main.dir/func-parsing.cpp.o.d"
   "CMakeFiles/main.dir/func-pwm.cpp.o"
   "CMakeFiles/main.dir/func-pwm.cpp.o.d"
   "CMakeFiles/main.dir/func-uart.cpp.o"

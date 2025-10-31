@@ -54,77 +54,6 @@ void on_uart0_rx(){
 			}
 		}
 		
-//		sem_acquire_blocking(&sem);
-/*			uart0DataInFlag = true;
-//		sem_release(&sem);
-//		printf("hogehoge");
-		if(uart0ReadBuff == 0x0A){
-			printf("<LF>");
-		}
-		else if(uart0ReadBuff == 0x0D){
-			printf("<CR>");
-		}
-		else{
-			printf("%c", uart0ReadBuff);
-		}*/
-/*
-		if(uart0Buff == 0x24 && !messageStartFlag){							//$
-			messageFinishFlag = false;
-			messageStartFlag = true;
-			printf("MESSAGE START");
-//			printf("%c\n", uart0Buff);
-			messageBlockCnt = 0;
-//			continue;
-		}
-*/
-/*
-		if(uart0Buff == 0x0a){							//<LF>
-			messageFinishFlag = true;
-			printf("MESSAGE FIN. %s\n", messageFinishFlag ? "true" : "false");
-		}
-*/
-/*		if(messageStartFlag){
-			if(uart0Buff != 0x2c){			//,
-				splitNMEA[messageBlockCnt] += uart0Buff;
-			}
-			else if(uart0Buff == 0x2c){
-				messageBlockCnt++;
-			}
-			else{
-				printf("ERROR!!!!!!!");
-				sleep_ms(100000);
-			}
-			if(messageBlockCnt >= 1){
-				if(splitNMEA[1].compare(0, 5, targetMessage) < 5){
-					continue;
-				}
-			}
-		}
-*/
-		
-
-        // Can we send it back?
-//        if (uart_is_writable(uart0)) {
-            // Change it slightly first!
-//            ch++;
- //           uart_putc(uart0, ch);
-    }
- //       chars_rxed++;
-}
-/*void on_uart1_rx() {
-    while (uart_is_readable(uart1)) {
-        uint8_t ch = uart_getc(uart1);
-        // Can we send it back?
-        if (uart_is_writable(uart1)) {
-            // Change it slightly first!
-            ch++;
-            uart_putc(uart1, ch);
-        }
-        chars_rxed++;
-    }
-}
-*/
-
 
 int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uint stopBit){
 	int uartTxPin = 1000;
@@ -164,8 +93,8 @@ int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uin
 		printf("CHECK THE UART ID");
 		return 1;
 	}
-	irq_set_enabled(UART_IRQ, true);
-	uart_set_irq_enables(uartPort, true, false);
+	irq_set_enabled(UART_IRQ, false);
+	uart_set_irq_enables(uartPort, false, false);
 
 
 	for(int i=0; i<30; i++){
