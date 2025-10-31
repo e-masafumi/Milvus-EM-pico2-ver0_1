@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/raven/pico/works/Milvus-EM-pico2
+CMAKE_SOURCE_DIR = /home/raven/pico/works/Milvus-EM-pico2-ver0_1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/raven/pico/works/Milvus-EM-pico2/build
+CMAKE_BINARY_DIR = /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build
 
 # Utility rule file for main_uart_rx_pio_h.
 
@@ -68,9 +68,9 @@ include CMakeFiles/main_uart_rx_pio_h.dir/progress.make
 
 CMakeFiles/main_uart_rx_pio_h: uart_rx.pio.h
 
-uart_rx.pio.h: /home/raven/pico/works/Milvus-EM-pico2/uart_rx.pio
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/raven/pico/works/Milvus-EM-pico2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating uart_rx.pio.h"
-	pioasm-install/pioasm/pioasm -o c-sdk -v 1 /home/raven/pico/works/Milvus-EM-pico2/uart_rx.pio /home/raven/pico/works/Milvus-EM-pico2/build/uart_rx.pio.h
+uart_rx.pio.h: /home/raven/pico/works/Milvus-EM-pico2-ver0_1/uart_rx.pio
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating uart_rx.pio.h"
+	pioasm-install/pioasm/pioasm -o c-sdk -v 1 /home/raven/pico/works/Milvus-EM-pico2-ver0_1/uart_rx.pio /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/uart_rx.pio.h
 
 main_uart_rx_pio_h: CMakeFiles/main_uart_rx_pio_h
 main_uart_rx_pio_h: uart_rx.pio.h
@@ -86,6 +86,6 @@ CMakeFiles/main_uart_rx_pio_h.dir/clean:
 .PHONY : CMakeFiles/main_uart_rx_pio_h.dir/clean
 
 CMakeFiles/main_uart_rx_pio_h.dir/depend:
-	cd /home/raven/pico/works/Milvus-EM-pico2/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/raven/pico/works/Milvus-EM-pico2 /home/raven/pico/works/Milvus-EM-pico2 /home/raven/pico/works/Milvus-EM-pico2/build /home/raven/pico/works/Milvus-EM-pico2/build /home/raven/pico/works/Milvus-EM-pico2/build/CMakeFiles/main_uart_rx_pio_h.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/raven/pico/works/Milvus-EM-pico2-ver0_1 /home/raven/pico/works/Milvus-EM-pico2-ver0_1 /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/CMakeFiles/main_uart_rx_pio_h.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/main_uart_rx_pio_h.dir/depend
 

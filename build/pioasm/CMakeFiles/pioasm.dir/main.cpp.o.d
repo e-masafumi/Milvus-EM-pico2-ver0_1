@@ -199,4 +199,4 @@ CMakeFiles/pioasm.dir/main.cpp.o: \
  /home/raven/pico/pico-sdk/tools/pioasm/gen/location.h \
  /usr/include/c++/13/cassert /usr/include/assert.h \
  /home/raven/pico/pico-sdk/tools/pioasm/output_format.h \
- /home/raven/pico/works/Milvus-EM-pico2/build/pioasm/version.h
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/pioasm/version.h

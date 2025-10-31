@@ -1,4 +1,4 @@
-// Padded and checksummed version of: /home/raven/pico/works/Milvus-EM-pico2/build/pico-sdk/src/rp2350/boot_stage2/bs2_default.bin
+// Padded and checksummed version of: /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/pico-sdk/src/rp2350/boot_stage2/bs2_default.bin
 
 .cpu cortex-m0plus
 .thumb

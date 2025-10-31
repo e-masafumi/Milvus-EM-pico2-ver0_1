@@ -27,9 +27,9 @@ CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_stdio_usb/reset
  /home/raven/pico/pico-sdk/src/common/pico_base_headers/include/pico/types.h \
  /home/raven/pico/pico-sdk/src/common/pico_base_headers/include/pico/assert.h \
  /usr/include/newlib/assert.h \
- /home/raven/pico/works/Milvus-EM-pico2/build/generated/pico_base/pico/version.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/generated/pico_base/pico/version.h \
  /home/raven/pico/pico-sdk/src/common/pico_base_headers/include/pico/config.h \
- /home/raven/pico/works/Milvus-EM-pico2/build/generated/pico_base/pico/config_autogen.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/generated/pico_base/pico/config_autogen.h \
  /home/raven/pico/pico-sdk/src/boards/include/boards/pico2.h \
  /home/raven/pico/pico-sdk/src/rp2_common/cmsis/include/cmsis/rename_exceptions.h \
  /home/raven/pico/pico-sdk/src/rp2350/pico_platform/include/pico/platform.h \

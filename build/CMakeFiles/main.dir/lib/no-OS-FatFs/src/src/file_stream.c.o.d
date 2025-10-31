@@ -1,5 +1,5 @@
 CMakeFiles/main.dir/lib/no-OS-FatFs/src/src/file_stream.c.o: \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/src/file_stream.c \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/src/file_stream.c \
  /usr/include/newlib/stdio.h /usr/include/newlib/_ansi.h \
  /usr/include/newlib/newlib.h /usr/include/newlib/_newlib_version.h \
  /usr/include/newlib/sys/config.h /usr/include/newlib/machine/ieeefp.h \
@@ -21,9 +21,9 @@ CMakeFiles/main.dir/lib/no-OS-FatFs/src/src/file_stream.c.o: \
  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdbool.h \
  /usr/include/newlib/assert.h \
  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h \
- /home/raven/pico/works/Milvus-EM-pico2/build/generated/pico_base/pico/version.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/generated/pico_base/pico/version.h \
  /home/raven/pico/pico-sdk/src/common/pico_base_headers/include/pico/config.h \
- /home/raven/pico/works/Milvus-EM-pico2/build/generated/pico_base/pico/config_autogen.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/generated/pico_base/pico/config_autogen.h \
  /home/raven/pico/pico-sdk/src/boards/include/boards/pico2.h \
  /home/raven/pico/pico-sdk/src/rp2_common/cmsis/include/cmsis/rename_exceptions.h \
  /home/raven/pico/pico-sdk/src/rp2350/pico_platform/include/pico/platform.h \
@@ -67,8 +67,8 @@ CMakeFiles/main.dir/lib/no-OS-FatFs/src/src/file_stream.c.o: \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/resets.h \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/resets.h \
  /home/raven/pico/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/ff15/source/ff.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/include/ffconf.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/include/f_util.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/include/my_debug.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/include/file_stream.h
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/ff15/source/ff.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/include/ffconf.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/include/f_util.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/include/my_debug.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/include/file_stream.h

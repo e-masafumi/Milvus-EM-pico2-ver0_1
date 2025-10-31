@@ -1,4 +1,4 @@
-# Install script for directory: /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src
+# Install script for directory: /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

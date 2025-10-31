@@ -56,7 +56,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/raven/pico/pico-sdk/tools/pioasm
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/raven/pico/works/Milvus-EM-pico2/build/pioasm
+CMAKE_BINARY_DIR = /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/pioasm
 
 # Include any dependencies generated for this target.
 include CMakeFiles/pioasm.dir/depend.make
@@ -250,6 +250,6 @@ CMakeFiles/pioasm.dir/clean:
 .PHONY : CMakeFiles/pioasm.dir/clean
 
 CMakeFiles/pioasm.dir/depend:
-	cd /home/raven/pico/works/Milvus-EM-pico2/build/pioasm && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/raven/pico/pico-sdk/tools/pioasm /home/raven/pico/pico-sdk/tools/pioasm /home/raven/pico/works/Milvus-EM-pico2/build/pioasm /home/raven/pico/works/Milvus-EM-pico2/build/pioasm /home/raven/pico/works/Milvus-EM-pico2/build/pioasm/CMakeFiles/pioasm.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/pioasm && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/raven/pico/pico-sdk/tools/pioasm /home/raven/pico/pico-sdk/tools/pioasm /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/pioasm /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/pioasm /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/pioasm/CMakeFiles/pioasm.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/pioasm.dir/depend
 

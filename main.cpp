@@ -420,7 +420,7 @@ int main(){
 	printf("UART actual baudrate,core1 0: %d, 1: %d\n", actualBaudrate[0], actualBaudrate[1]);
 
 
-	add_repeating_timer_us(1000/EXE_FREC*1000, repeating_timer_callback, NULL, &st_timer);
+	add_repeating_timer_us(-1000/EXE_FREC*1000, repeating_timer_callback, NULL, &st_timer);
 
 
 	uint32_t f_pll_sys = frequency_count_khz(CLOCKS_FC0_SRC_VALUE_PLL_SYS_CLKSRC_PRIMARY);
@@ -552,145 +552,12 @@ int main(){
 		}
 		
 		nowTime = time_us_32();
-//		printf("Now[ms]: %lf\n", (double)nowTime/1000);
-//		printf("dt[ms]: %lf\n\n", ((double)nowTime - (double)preTime)/1000);
 		preTime = time_us_32();
 
 		logData.timeBuff_64 = time_us_64();
-//		MS5837.readTempPress(i2c1, &logData.outTemp, &logData.outPress);
 		BNO055.readAccel(i2c1, &logData.xAccel, &logData.yAccel, &logData.zAccel);
 		BNO055.readMag(i2c1, &logData.xMag, &logData.yMag, &logData.zMag);
 		INA228.readCurVolPow(i2c0, &logData.mainCur, &logData.mainVol, &logData.mainPow);
-//		printf("GPS Time: %lf \n", decodedNMEA.time);
-//		printf("Main Voltage: %lf [V] \n", logData.mainVol/1e6);
-//		printf("Main Current: %lf [A] \n", logData.mainCur/1e6);
-//		printf("Outer Pressure: %lf [hPa] \n", logData.outPress);
-//		printf("Outer Temp: %lf [Deg.C.] \n", logData.outTemp);
-//		printf("\n");
-
-
-/*		if(logData.mainVol*1e-6 < CELL_NUMBER * VOLTAGE_LOWER_LIMIT_PER_CELL){
-			for(int i=0;i<4;i++){
-				pwm.duty(i, pwm.dutyFit(0.5, 0.55, 0.95));
-			}
-			printf("Voltage NG(BECAME TOO LOW): %lf [V]\n", logData.mainVol*1e-6);
-			while(1){
-				for(int i=0;i<3;i++){
-					gpio_put(LED_PIN, 1);
-					sleep_ms(200);
-					gpio_put(LED_PIN, 0);
-					sleep_ms(200);
-				}
-				sleep_ms(100);
-				for(int i=0;i<3;i++){
-					gpio_put(LED_PIN, 1);
-					sleep_ms(400);
-					gpio_put(LED_PIN, 0);
-					sleep_ms(400);
-				}
-				sleep_ms(100);
-				for(int i=0;i<3;i++){
-					gpio_put(LED_PIN, 1);
-					sleep_ms(200);
-					gpio_put(LED_PIN, 0);
-					sleep_ms(200);
-				}
-				sleep_ms(1000);
-			}
-		}
-*/
-/*		if(inputAccept){
-			uartReceiveData = usbuart.receive_usbuart_data();
-			switch((int)uartReceiveData){
-				case -9999:
-					for(int i=0;i<4;i++){
-						thrusterOutput[i] = 0.0;
-						pwm.duty(i, pwm.dutyFitPct(thrusterOutput[i], 0.55, 0.95));
-					}
-					printf("STOP, input: %lf\n", uartReceiveData);
-					while(1);
-					break;
-				
-				case -1111:
-					ManualModeFlag = true;
-					for(int i=0;i<4;i++){
-						thrusterOutput[i] = 0;
-						pwm.duty(i, pwm.dutyFitPct(thrusterOutput[i], 0.55, 0.95));
-					}
-					printf("INTO Manual Mode\n");
-					break;
-				case -8888:
-					ManualModeFlag = false;
-					break;
-				default:
-					break;
-			}
-*/			
-/*
-			if(ManualModeFlag){
-				if(uartReceiveData > 0){
-					int motorNum = 0;
-					double dutyPct = 50.0;
-					motorNum = (int) ((int)uartReceiveData / 1000);
-					dutyPct = (int)(uartReceiveData - motorNum*1000) % 1000;
-					thrusterOutput[motorNum] = dutyPct;
-					printf("motorNum(MAN):%d, dutyPct(MAN):%d\n", motorNum, dutyPct);
-				}
-			}
-			else if(!ManualModeFlag){
-				if(uartReceiveData > 0){
-					targetDepth = usbuart.receive_usbuart_data();
-				}
-				else if(uartReceiveData < 0 && uartReceiveData > -500){
-					kp = usbuart.receive_usbuart_data() * (-1.0);
-				}
-				else{
-					targetDepth = targetDepth;
-					kp = kp;
-				}
-			}
-			else{
-			}
-		}
-		else{
-			targetDepth = DEFAULT_TARGET_DEPTH_M;
-			kp = kp;
-		}	
-		
-		
-		currentDepth = (logData.outPress-pSurface)/1013.0*10;
-		depthError = targetDepth - currentDepth;
-
-		if(!ManualModeFlag){
-			thrusterOutput[LEFT_VERTICAL] = depthError * kp;
-			thrusterOutput[RIGHT_VERTICAL] = depthError * kp;
-			thrusterOutput[LEFT_VERTICAL] = clamp<double>(thrusterOutput[LEFT_VERTICAL], -100.0f, 100.0f);
-			thrusterOutput[RIGHT_VERTICAL] = clamp<double>(thrusterOutput[RIGHT_VERTICAL], -100.0f, 100.0f);
-		
-			thrusterOutput[RIGHT_HORIZONTAL] = 0;
-			thrusterOutput[LEFT_HORIZONTAL] = 0;
-
-			printf("LEFT_VERTICAL_COUT:%lf, RIGHT_VERTICAL_COUT:%lf\n", thrusterOutput[LEFT_VERTICAL], thrusterOutput[RIGHT_VERTICAL]);
-			printf("LEFT_HORIZONTAL_COUT:%lf, RIGHT_HORIZONTAL_COUT:%lf\n\n", thrusterOutput[LEFT_HORIZONTAL], thrusterOutput[RIGHT_HORIZONTAL]);
-			for(int i=0;i<4;i++){
-//				thrausterOutput[i] = (thrusterOutput[i] + 100.0) * 0.5;
-				pwm.duty(i, pwm.dutyFitPct(thrusterOutput[i], 0.55, 0.95));
-				printf("Duty%d: %lf\n", i, pwm.dutyFitPct(thrusterOutput[i], 0.55, 0.95));
-			}
-		}
-
-		if(ManualModeFlag){
-			for(int i=0;i<4;i++){
-				pwm.duty(i, pwm.dutyFitPct(thrusterOutput[i], 0.55, 0.95));
-			}
-		}
-*/
-//		printf("MAN Mode %d\n", ManualModeFlag);
-//		printf("Target Depth[cm]: %lf, Current P gain: %lf\n", targetDepth*100, kp);
-//		printf("Current Depth[cm]: %lf\n", currentDepth*100);
-//		printf("LEFT_VERTICAL_DUTY:%lf, RIGHT_VERTICAL_DUTY:%lf\n", thrusterOutput[LEFT_VERTICAL], thrusterOutput[RIGHT_VERTICAL]);
-//		printf("LEFT_HORIZONTAL_DUTY:%lf, RIGHT_HORIZONTAL_DUTY:%lf\n\n", thrusterOutput[LEFT_HORIZONTAL], thrusterOutput[RIGHT_HORIZONTAL]);
-//		printf("Main Voltage: %lf[V]\n", logData.mainVol);
 
 		multicore_fifo_push_blocking(LOG_WRITE_COM);
 		exeFlag = false;

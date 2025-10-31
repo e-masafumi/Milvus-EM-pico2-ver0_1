@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/raven/pico/pico-sdk/tools/pioasm -I/home/raven/pico/pico-sdk/tools/pioasm/gen -I/home/raven/pico/works/Milvus-EM-pico2/build/pioasm
+CXX_INCLUDES = -I/home/raven/pico/pico-sdk/tools/pioasm -I/home/raven/pico/pico-sdk/tools/pioasm/gen -I/home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/pioasm
 
 CXX_FLAGS = -O3 -DNDEBUG -std=gnu++11
 

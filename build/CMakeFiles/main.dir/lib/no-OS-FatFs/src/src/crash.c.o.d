@@ -1,5 +1,5 @@
 CMakeFiles/main.dir/lib/no-OS-FatFs/src/src/crash.c.o: \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/src/crash.c \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/src/crash.c \
  /usr/include/newlib/string.h /usr/include/newlib/_ansi.h \
  /usr/include/newlib/newlib.h /usr/include/newlib/_newlib_version.h \
  /usr/include/newlib/sys/config.h /usr/include/newlib/machine/ieeefp.h \
@@ -26,9 +26,9 @@ CMakeFiles/main.dir/lib/no-OS-FatFs/src/src/crash.c.o: \
  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdbool.h \
  /usr/include/newlib/assert.h \
  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h \
- /home/raven/pico/works/Milvus-EM-pico2/build/generated/pico_base/pico/version.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/generated/pico_base/pico/version.h \
  /home/raven/pico/pico-sdk/src/common/pico_base_headers/include/pico/config.h \
- /home/raven/pico/works/Milvus-EM-pico2/build/generated/pico_base/pico/config_autogen.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/generated/pico_base/pico/config_autogen.h \
  /home/raven/pico/pico-sdk/src/boards/include/boards/pico2.h \
  /home/raven/pico/pico-sdk/src/rp2_common/cmsis/include/cmsis/rename_exceptions.h \
  /home/raven/pico/pico-sdk/src/rp2350/pico_platform/include/pico/platform.h \
@@ -84,9 +84,9 @@ CMakeFiles/main.dir/lib/no-OS-FatFs/src/src/crash.c.o: \
  /home/raven/pico/pico-sdk/src/rp2_common/cmsis/stub/CMSIS/Core/Include/m-profile/cmsis_gcc_m.h \
  /home/raven/pico/pico-sdk/src/rp2_common/cmsis/stub/CMSIS/Core/Include/m-profile/armv8m_mpu.h \
  /home/raven/pico/pico-sdk/src/rp2_common/cmsis/stub/CMSIS/Device/RP2350/Include/system_RP2350.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/include/crc.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/include/my_debug.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/include/crc.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/include/my_debug.h \
  /usr/include/newlib/stdio.h /usr/include/newlib/sys/stdio.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/include/my_rtc.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/include/util.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/include/crash.h
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/include/my_rtc.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/include/util.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/include/crash.h

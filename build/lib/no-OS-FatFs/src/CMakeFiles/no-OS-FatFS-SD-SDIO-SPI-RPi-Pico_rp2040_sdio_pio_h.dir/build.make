@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/raven/pico/works/Milvus-EM-pico2
+CMAKE_SOURCE_DIR = /home/raven/pico/works/Milvus-EM-pico2-ver0_1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/raven/pico/works/Milvus-EM-pico2/build
+CMAKE_BINARY_DIR = /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build
 
 # Utility rule file for no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.
 
@@ -68,9 +68,9 @@ include lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_s
 
 lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h: lib/no-OS-FatFs/src/rp2040_sdio.pio.h
 
-lib/no-OS-FatFs/src/rp2040_sdio.pio.h: /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/sd_driver/SDIO/rp2040_sdio.pio
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/raven/pico/works/Milvus-EM-pico2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating rp2040_sdio.pio.h"
-	cd /home/raven/pico/works/Milvus-EM-pico2/build/lib/no-OS-FatFs/src && ../../../pioasm-install/pioasm/pioasm -o c-sdk -v 1 /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/sd_driver/SDIO/rp2040_sdio.pio /home/raven/pico/works/Milvus-EM-pico2/build/lib/no-OS-FatFs/src/rp2040_sdio.pio.h
+lib/no-OS-FatFs/src/rp2040_sdio.pio.h: /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/sd_driver/SDIO/rp2040_sdio.pio
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating rp2040_sdio.pio.h"
+	cd /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/lib/no-OS-FatFs/src && ../../../pioasm-install/pioasm/pioasm -o c-sdk -v 1 /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/sd_driver/SDIO/rp2040_sdio.pio /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/lib/no-OS-FatFs/src/rp2040_sdio.pio.h
 
 no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h: lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h
 no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h: lib/no-OS-FatFs/src/rp2040_sdio.pio.h
@@ -82,10 +82,10 @@ lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_
 .PHONY : lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/build
 
 lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/clean:
-	cd /home/raven/pico/works/Milvus-EM-pico2/build/lib/no-OS-FatFs/src && $(CMAKE_COMMAND) -P CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/cmake_clean.cmake
+	cd /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/lib/no-OS-FatFs/src && $(CMAKE_COMMAND) -P CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/cmake_clean.cmake
 .PHONY : lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/clean
 
 lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/depend:
-	cd /home/raven/pico/works/Milvus-EM-pico2/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/raven/pico/works/Milvus-EM-pico2 /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src /home/raven/pico/works/Milvus-EM-pico2/build /home/raven/pico/works/Milvus-EM-pico2/build/lib/no-OS-FatFs/src /home/raven/pico/works/Milvus-EM-pico2/build/lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/raven/pico/works/Milvus-EM-pico2-ver0_1 /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/lib/no-OS-FatFs/src /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/depend
 

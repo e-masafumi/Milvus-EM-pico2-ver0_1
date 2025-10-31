@@ -1,4 +1,4 @@
-# Install script for directory: /home/raven/pico/works/Milvus-EM-pico2
+# Install script for directory: /home/raven/pico/works/Milvus-EM-pico2-ver0_1
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,8 +39,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/raven/pico/works/Milvus-EM-pico2/build/pico-sdk/cmake_install.cmake")
-  include("/home/raven/pico/works/Milvus-EM-pico2/build/lib/no-OS-FatFs/src/cmake_install.cmake")
+  include("/home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/pico-sdk/cmake_install.cmake")
+  include("/home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/lib/no-OS-FatFs/src/cmake_install.cmake")
 
 endif()
 
@@ -52,5 +52,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/raven/pico/works/Milvus-EM-pico2/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

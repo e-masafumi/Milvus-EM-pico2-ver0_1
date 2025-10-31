@@ -39,16 +39,16 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/raven/pico/works/Milvus-EM-pico2/build/pico-sdk/tools/cmake_install.cmake")
+  include("/home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/pico-sdk/tools/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/raven/pico/works/Milvus-EM-pico2/build/pico-sdk/src/cmake_install.cmake")
+  include("/home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/pico-sdk/src/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/raven/pico/works/Milvus-EM-pico2/build/pico-sdk/docs/cmake_install.cmake")
+  include("/home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/pico-sdk/docs/cmake_install.cmake")
 endif()
 

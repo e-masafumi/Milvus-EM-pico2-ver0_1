@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/raven/pico/works/Milvus-EM-pico2
+CMAKE_SOURCE_DIR = /home/raven/pico/works/Milvus-EM-pico2-ver0_1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/raven/pico/works/Milvus-EM-pico2/build
+CMAKE_BINARY_DIR = /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,14 +87,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/raven/pico/works/Milvus-EM-pico2/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/raven/pico/works/Milvus-EM-pico2/build/CMakeFiles /home/raven/pico/works/Milvus-EM-pico2/build/lib/no-OS-FatFs/src//CMakeFiles/progress.marks
-	cd /home/raven/pico/works/Milvus-EM-pico2/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/no-OS-FatFs/src/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/raven/pico/works/Milvus-EM-pico2/build/CMakeFiles 0
+	cd /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/CMakeFiles /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/lib/no-OS-FatFs/src//CMakeFiles/progress.marks
+	cd /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/no-OS-FatFs/src/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/raven/pico/works/Milvus-EM-pico2/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/no-OS-FatFs/src/clean
+	cd /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/no-OS-FatFs/src/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,22 +103,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/raven/pico/works/Milvus-EM-pico2/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/no-OS-FatFs/src/preinstall
+	cd /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/no-OS-FatFs/src/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/raven/pico/works/Milvus-EM-pico2/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/no-OS-FatFs/src/preinstall
+	cd /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/no-OS-FatFs/src/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/raven/pico/works/Milvus-EM-pico2/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/rule:
-	cd /home/raven/pico/works/Milvus-EM-pico2/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/rule
+	cd /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/rule
 .PHONY : lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/rule
 
 # Convenience name for target.
@@ -127,7 +127,7 @@ no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h: lib/no-OS-FatFs/src/CMakeFil
 
 # fast build rule for target.
 no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h/fast:
-	cd /home/raven/pico/works/Milvus-EM-pico2/build && $(MAKE) $(MAKESILENT) -f lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/build.make lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/build
+	cd /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build && $(MAKE) $(MAKESILENT) -f lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/build.make lib/no-OS-FatFs/src/CMakeFiles/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h.dir/build
 .PHONY : no-OS-FatFS-SD-SDIO-SPI-RPi-Pico_rp2040_sdio_pio_h/fast
 
 # Help Target
@@ -150,6 +150,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/raven/pico/works/Milvus-EM-pico2/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

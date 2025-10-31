@@ -1,5 +1,5 @@
 CMakeFiles/main.dir/main.cpp.o: \
- /home/raven/pico/works/Milvus-EM-pico2/main.cpp \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/main.cpp \
  /usr/include/newlib/c++/13.2.1/iostream \
  /usr/include/newlib/c++/13.2.1/bits/requires_hosted.h \
  /usr/include/newlib/c++/13.2.1/arm-none-eabi/thumb/v8-m.main+fp/softfp/bits/c++config.h \
@@ -307,9 +307,9 @@ CMakeFiles/main.dir/main.cpp.o: \
  /home/raven/pico/pico-sdk/src/common/pico_base_headers/include/pico.h \
  /home/raven/pico/pico-sdk/src/common/pico_base_headers/include/pico/types.h \
  /home/raven/pico/pico-sdk/src/common/pico_base_headers/include/pico/assert.h \
- /home/raven/pico/works/Milvus-EM-pico2/build/generated/pico_base/pico/version.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/generated/pico_base/pico/version.h \
  /home/raven/pico/pico-sdk/src/common/pico_base_headers/include/pico/config.h \
- /home/raven/pico/works/Milvus-EM-pico2/build/generated/pico_base/pico/config_autogen.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/generated/pico_base/pico/config_autogen.h \
  /home/raven/pico/pico-sdk/src/boards/include/boards/pico2.h \
  /home/raven/pico/pico-sdk/src/rp2_common/cmsis/include/cmsis/rename_exceptions.h \
  /home/raven/pico/pico-sdk/src/rp2350/pico_platform/include/pico/platform.h \
@@ -371,28 +371,28 @@ CMakeFiles/main.dir/main.cpp.o: \
  /home/raven/pico/pico-sdk/src/rp2_common/hardware_clocks/include/hardware/clocks.h \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/clocks.h \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/clocks.h \
- /home/raven/pico/works/Milvus-EM-pico2/build/uart_rx.pio.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/uart_rx.pio.h \
  /home/raven/pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info.h \
  /home/raven/pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/defs.h \
  /home/raven/pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/structure.h \
  /home/raven/pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/code.h \
- /home/raven/pico/works/Milvus-EM-pico2/extern.h \
- /home/raven/pico/works/Milvus-EM-pico2/struct.h \
- /home/raven/pico/works/Milvus-EM-pico2/func-pwm.h \
- /home/raven/pico/works/Milvus-EM-pico2/func-i2c.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/extern.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/struct.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-pwm.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-i2c.h \
  /home/raven/pico/pico-sdk/src/rp2_common/hardware_i2c/include/hardware/i2c.h \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/i2c.h \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/i2c.h \
- /home/raven/pico/works/Milvus-EM-pico2/func-uart.h \
- /home/raven/pico/works/Milvus-EM-pico2/func-usbuart.h \
- /home/raven/pico/works/Milvus-EM-pico2/func-MS5837-02BA.h \
- /home/raven/pico/works/Milvus-EM-pico2/func-BNO055.h \
- /home/raven/pico/works/Milvus-EM-pico2/func-INA228.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/ff15/source/ff.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/include/ffconf.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/sd_driver/sd_card.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/sd_driver/SDIO/rp2040_sdio.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/sd_driver/SPI/my_spi.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-uart.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-usbuart.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-MS5837-02BA.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-BNO055.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-INA228.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/ff15/source/ff.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/include/ffconf.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/sd_driver/sd_card.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/sd_driver/SDIO/rp2040_sdio.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/sd_driver/SPI/my_spi.h \
  /home/raven/pico/pico-sdk/src/rp2_common/hardware_dma/include/hardware/dma.h \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/dma.h \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/dma.h \
@@ -400,12 +400,12 @@ CMakeFiles/main.dir/main.cpp.o: \
  /home/raven/pico/pico-sdk/src/rp2_common/hardware_spi/include/hardware/spi.h \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/spi.h \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/spi.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/include/my_debug.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/include/sd_timeouts.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/sd_driver/SPI/sd_card_spi.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/ff15/source/diskio.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/ff15/source/ff.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/sd_driver/sd_card_constants.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/sd_driver/sd_regs.h \
- /home/raven/pico/works/Milvus-EM-pico2/lib/no-OS-FatFs/src/include/util.h \
- /home/raven/pico/works/Milvus-EM-pico2/pio_uart.hpp
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/include/my_debug.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/include/sd_timeouts.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/sd_driver/SPI/sd_card_spi.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/ff15/source/diskio.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/ff15/source/ff.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/sd_driver/sd_card_constants.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/sd_driver/sd_regs.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/lib/no-OS-FatFs/src/include/util.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/pio_uart.hpp

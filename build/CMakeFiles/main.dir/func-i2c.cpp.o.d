@@ -1,5 +1,5 @@
 CMakeFiles/main.dir/func-i2c.cpp.o: \
- /home/raven/pico/works/Milvus-EM-pico2/func-i2c.cpp \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-i2c.cpp \
  /usr/include/newlib/stdio.h /usr/include/newlib/_ansi.h \
  /usr/include/newlib/newlib.h /usr/include/newlib/_newlib_version.h \
  /usr/include/newlib/sys/config.h /usr/include/newlib/machine/ieeefp.h \
@@ -22,9 +22,9 @@ CMakeFiles/main.dir/func-i2c.cpp.o: \
  /usr/include/newlib/c++/13.2.1/pstl/pstl_config.h \
  /usr/include/newlib/assert.h \
  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h \
- /home/raven/pico/works/Milvus-EM-pico2/build/generated/pico_base/pico/version.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/generated/pico_base/pico/version.h \
  /home/raven/pico/pico-sdk/src/common/pico_base_headers/include/pico/config.h \
- /home/raven/pico/works/Milvus-EM-pico2/build/generated/pico_base/pico/config_autogen.h \
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/build/generated/pico_base/pico/config_autogen.h \
  /home/raven/pico/pico-sdk/src/boards/include/boards/pico2.h \
  /home/raven/pico/pico-sdk/src/rp2_common/cmsis/include/cmsis/rename_exceptions.h \
  /home/raven/pico/pico-sdk/src/rp2350/pico_platform/include/pico/platform.h \
@@ -71,4 +71,4 @@ CMakeFiles/main.dir/func-i2c.cpp.o: \
  /home/raven/pico/pico-sdk/src/rp2_common/hardware_i2c/include/hardware/i2c.h \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/i2c.h \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/i2c.h \
- /home/raven/pico/works/Milvus-EM-pico2/func-i2c.h
+ /home/raven/pico/works/Milvus-EM-pico2-ver0_1/func-i2c.h
