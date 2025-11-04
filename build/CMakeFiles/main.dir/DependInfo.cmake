@@ -277,6 +277,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/raven/pico/pico-sdk/src/rp2_common/pico_cxx_options/new_delete.cpp" "CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_cxx_options/new_delete.cpp.o" "gcc" "CMakeFiles/main.dir/home/raven/pico/pico-sdk/src/rp2_common/pico_cxx_options/new_delete.cpp.o.d"
   "/home/raven/pico/works/Milvus-EM-pico2-ver0_1/main.cpp" "CMakeFiles/main.dir/main.cpp.o" "gcc" "CMakeFiles/main.dir/main.cpp.o.d"
   "/home/raven/pico/works/Milvus-EM-pico2-ver0_1/pio_uart.cpp" "CMakeFiles/main.dir/pio_uart.cpp.o" "gcc" "CMakeFiles/main.dir/pio_uart.cpp.o.d"
+  "/home/raven/pico/works/Milvus-EM-pico2-ver0_1/uart_dma.cpp" "CMakeFiles/main.dir/uart_dma.cpp.o" "gcc" "CMakeFiles/main.dir/uart_dma.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -20,6 +20,7 @@ add_executable(main
 	hw_config.c
 	pio_uart.cpp
 	func-parsing.cpp
+	uart_dma.cpp
 )
 
 pico_generate_pio_header(main ${CMAKE_CURRENT_LIST_DIR}/uart_rx.pio)

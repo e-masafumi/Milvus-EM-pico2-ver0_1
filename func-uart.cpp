@@ -6,6 +6,9 @@
 #include "hardware/irq.h"
 #include "func-uart.h"
 
+
+#define UART0_BAUDRATE 115200
+
 const uint UART0_TX_PIN = 0;
 const uint UART0_RX_PIN = 1;
 const uint UART1_TX_PIN = 4;
@@ -53,7 +56,8 @@ void on_uart0_rx(){
 				nmeaLaunchFlag = true;
 			}
 		}
-		
+	}
+}
 
 int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uint stopBit){
 	int uartTxPin = 1000;
@@ -158,7 +162,7 @@ int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uin
 	sleep_ms(500);	
 
 
-	char ultimateGPSset2[] = "PMTK251,38400";
+	char ultimateGPSset2[] = "PMTK251,115200";
 	//PMTK251, baudrate
 	NMEAchecksum = ultimateGPSset2[0];
 	for(int i=1; i<(sizeof(ultimateGPSset2)/sizeof(ultimateGPSset2[0]))-1; i++){
@@ -183,7 +187,7 @@ int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uin
 	printf("\r\n");
 	sleep_ms(500);	
 
-	actual = uart_set_baudrate(uartPort, 38400);
+	actual = uart_set_baudrate(uartPort, UART0_BAUDRATE);
 
 	return actual;
 }

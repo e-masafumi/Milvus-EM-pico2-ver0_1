@@ -1,6 +1,8 @@
 #ifndef FUNC_STRUCT_H
 #define FUNC_STRUCT_H
 
+#include <cstdint>
+
 struct str_sensorsData{
 	uint64_t timeBuff_64=0;
 	double mainVol=0.0;

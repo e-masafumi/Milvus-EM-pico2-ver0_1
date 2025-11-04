@@ -130,54 +130,6 @@ bool fifo_push(const char* s){
     q[q_w][LINE_MAX-1]='\0';
     q_w=n; return true;
 }
-/*
-void parseCsvULSA(const char* line) {
-  // もし '#' で始まっていたらスキップするだけ
-	if (line[0] == '#') line++;
-
-  // 一時バッファを作る（strtokは元の文字列を書き換えるのでコピーする）
-  char buf[256];
-  strncpy(buf, line, sizeof(buf));
-  buf[sizeof(buf) - 1] = '\0';
-
-  char* token = strtok(buf, ",");
-  int   index = 0;
-
-  while (token != nullptr) {
-		if (index == 0) {
-			decodedULSA.id = atoi(token);
-      printf("id = %d\n", decodedULSA.id);
-    } 
-		else if (index == 1) {
-			decodedULSA.active = atoi(token);
-      printf("active = %d\n", decodedULSA.active);
-    } 
-		else if (index == 2) {
-      decodedULSA.direction = atoi(token);
-      printf("direction = %d\n", decodedULSA.direction);
-    } 
-		else if (index == 3) {
-      decodedULSA.absoluteSpeed = atof(token);
-      printf("absoluteSpeed = %f\n", decodedULSA.absoluteSpeed);
-		}
-		else if (index == 4) {
-      decodedULSA.noseSpeed = atof(token);
-      printf("noseSpeed = %f\n", decodedULSA.noseSpeed);
-		}
-		else if (index == 5) {
-      decodedULSA.soundSpeed = atof(token);
-      printf("soundSpeed = %f\n", decodedULSA.soundSpeed);
-		}
-		else if (index == 6) {
-      decodedULSA.virtualTemp = atof(token);
-      printf("virtualTemp = %f\n", decodedULSA.virtualTemp);
-		}
-
-    index++;
-    token = strtok(nullptr, ",");  // 次のカンマ区切りへ
-  }
-}
-*/
 
 
 void core1_main(void){
@@ -254,34 +206,41 @@ void core1_main(void){
 		while (true);
 	}
 
-	uart_rx_dma_init(g_gnss, uart1, g_ring, sizeof(g_ring), 115200);
+	uart_rx_dma_init(g_gnss, uart0, g_ring, sizeof(g_ring), 115200);
 
 	multicore_fifo_push_blocking(CORE1_HELLO);
 
 	printf("SPI Baudrate = %d\n\n", spi_get_baudrate(spi0));
 	static uint8_t tmp[256];	
+	static char linebuf[256];
+	static size_t linelen = 0;
 
 	while(1){
-		size_t n = uart_rx_dma_read(g_gnss, tmp, sizeof(tmp));
 		static uint32_t core1preTime;
 		static uint32_t core1postTime;
 
 		uint32_t logWriteCom = multicore_fifo_pop_blocking();
-		size_t n = uart_rx_dma_read(uart_gnss, buf, sizeof(buf));
-		if (n) {
-			for (size_t i = 0; i < n; i++) {
-				char c = buf[i];
-        if (c == '\n') {
-					linebuf[linelen] = '\0'; // 1行終端
- //         gnss_parse_nmea(linebuf); // ← ここでNMEAデコード
+//		size_t n = uart_rx_dma_read(uart_gnss, buf, sizeof(buf));
+		size_t n = uart_rx_dma_read(g_gnss, tmp, sizeof(tmp));
+		if (uart_is_readable(uart0)) {
+			int ch = uart_getc(uart0);
+			printf("RX peek: 0x%02X '%c'\n", ch & 0xFF, (ch>=32 && ch<127)? ch : '.');
+		}
+
+		if(n){		//新しい受信データがあったなら
+			for (size_t i = 0; i < n; i++){	//その受信データの文字数分だけ
+				char c = tmp[i];	//1文字ずつ取り出し
+        if (c == '\n') {	//改行を見つけたら
+					linebuf[linelen] = '\0'; // 1行終端(最後をnull文字にして扱いやすくする)
+//					printf("[NMEA] %s\n", linebuf);	
+          parseNMEA(linebuf); // 1行揃ったのでNMEAデコード
           linelen = 0;              // バッファをリセット
         }
 				else if (linelen < sizeof(linebuf) - 1) {
-					linebuf[linelen++] = c;   // 継続して積み上げ
+					linebuf[linelen++] = c;   // まだ行区切りが来ていないのでバッファに入れ続ける
         } 
 				else {
-					// オーバーフロー防止（長すぎたらリセット）
-          linelen = 0;
+          linelen = 0; //バッファが溢れたらいったんリセット
         }
       }
     }
@@ -546,7 +505,7 @@ int main(){
 			while (rx.popLine(line, sizeof(line))) {
         fifo_push(line);  // ここでは単にコピーして保存するだけ
 				parseCsvULSA(line);
-				puts(line);
+//				puts(line);
 			}
 		}	   
 		

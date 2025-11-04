@@ -2916,6 +2916,30 @@ pio_uart.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/pio_uart.cpp.s
 .PHONY : pio_uart.cpp.s
 
+uart_dma.o: uart_dma.cpp.o
+.PHONY : uart_dma.o
+
+# target to build an object file
+uart_dma.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/uart_dma.cpp.o
+.PHONY : uart_dma.cpp.o
+
+uart_dma.i: uart_dma.cpp.i
+.PHONY : uart_dma.i
+
+# target to preprocess a source file
+uart_dma.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/uart_dma.cpp.i
+.PHONY : uart_dma.cpp.i
+
+uart_dma.s: uart_dma.cpp.s
+.PHONY : uart_dma.s
+
+# target to generate assembly for a file
+uart_dma.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/uart_dma.cpp.s
+.PHONY : uart_dma.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -3269,6 +3293,9 @@ help:
 	@echo "... pio_uart.o"
 	@echo "... pio_uart.i"
 	@echo "... pio_uart.s"
+	@echo "... uart_dma.o"
+	@echo "... uart_dma.i"
+	@echo "... uart_dma.s"
 .PHONY : help
 
 

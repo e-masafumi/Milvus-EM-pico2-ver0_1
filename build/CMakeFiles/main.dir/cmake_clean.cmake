@@ -227,6 +227,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/main.dir/main.cpp.o.d"
   "CMakeFiles/main.dir/pio_uart.cpp.o"
   "CMakeFiles/main.dir/pio_uart.cpp.o.d"
+  "CMakeFiles/main.dir/uart_dma.cpp.o"
+  "CMakeFiles/main.dir/uart_dma.cpp.o.d"
   "main.bin"
   "main.dis"
   "main.elf"

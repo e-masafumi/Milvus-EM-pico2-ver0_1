@@ -1,5 +1,7 @@
 #include "uart_dma.hpp"		//構造体の定義と関数プロトタイプ宣言
 #include "hardware/regs/dreq.h"		//DMA request番号の一覧
+#include <cstring>	//memcpy使いたい
+#include <algorithm>	//min使いたい
 
 
 // UART受信をDMAでリングバッファに流し続けるように設定する初期化関数
@@ -11,8 +13,8 @@ bool uart_rx_dma_init(UartRxDma& u, uart_inst_t* UARTx, uint8_t* ring_mem, size_
     u.last_w = 0;	//最終書き込み位置を初期化
 
     // UART初期化（既存設定があるならそれを流用）
-    uart_init(UARTx, baud);		//UARTのbaudrate設定
-    uart_set_format(UARTx, 8, 1, UART_PARITY_NONE);	//UARTの通信フォーマット設定
+//    uart_init(UARTx, baud);		//UARTのbaudrate設定
+//    uart_set_format(UARTx, 8, 1, UART_PARITY_NONE);	//UARTの通信フォーマット設定
     uart_set_fifo_enabled(UARTx, true);	//FIFOバッファを有効化
 
     // DMAチャネル確保
