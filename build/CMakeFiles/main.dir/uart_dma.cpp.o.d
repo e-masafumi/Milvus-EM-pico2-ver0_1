@@ -70,6 +70,10 @@ CMakeFiles/main.dir/uart_dma.cpp.o: \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/dma.h \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/dma.h \
  /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/dma_debug.h \
+ /home/raven/pico/pico-sdk/src/rp2_common/hardware_pio/include/hardware/pio.h \
+ /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/pio.h \
+ /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/pio.h \
+ /home/raven/pico/pico-sdk/src/rp2_common/hardware_pio/include/hardware/pio_instructions.h \
  /usr/include/newlib/c++/13.2.1/cstring /usr/include/newlib/string.h \
  /usr/include/newlib/sys/reent.h /usr/include/newlib/_ansi.h \
  /usr/include/newlib/sys/_types.h /usr/include/newlib/machine/_types.h \

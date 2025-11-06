@@ -84,7 +84,7 @@ int pico_uart::setup(uart_inst_t *uartPort, uint uartBaudrate, uint dataBit, uin
 	uart_set_hw_flow(uartPort, false, false);
 	uart_set_format(uartPort, dataBit, stopBit, UART_PARITY_NONE);
 
-	uart_set_fifo_enabled(uartPort, false);
+	uart_set_fifo_enabled(uartPort, true);
 
 	int UART_IRQ = uartPort == uart0 ? UART0_IRQ : UART1_IRQ;
 	if(uartPort == uart0){

@@ -4,7 +4,56 @@
 #include <algorithm>	//min使いたい
 
 
-// UART受信をDMAでリングバッファに流し続けるように設定する初期化関数
+// UART受信をDMAでリングバッファに流し続けるように設定する初期化関数(hard UARTとPIO両対応)
+bool dma_rx_ring_init(UartRxDma& u, volatile void* src_reg,  uint dreq, uint8_t* ring_mem, size_t ring_sz){	//初期化用関数
+	u.src_reg = src_reg;	//受信レジスタ設定
+	u.dreq = dreq;				//割り込みレジスタ設定
+	u.ring = ring_mem;	//リングバッファ先頭アドレス
+	u.ring_size = ring_sz;	//リングバッファサイズ
+	u.ring_mask = (uint32_t)(ring_sz - 1);	//リングバッファ先頭に戻るためのマスク
+  u.last_w = 0;	//最終書き込み位置を初期化
+
+
+  // DMAチャネル確保
+  u.ch = dma_claim_unused_channel(true);	//DMAで使用されていないチャンネルを要求
+  dma_channel_config c = dma_channel_get_default_config(u.ch);	//上記でgetしたチャンネルを使用するよう設定
+  channel_config_set_transfer_data_size(&c, DMA_SIZE_8);	//一度に扱うデータサイズを設定
+  channel_config_set_read_increment(&c, false);  // src = UART DR 固定
+  channel_config_set_write_increment(&c, true);  // dst = メモリ前進
+  channel_config_set_dreq(&c, dreq);	//使用するUART番号に応じてRequestの番号を選択
+
+  // 書き込みアドレスをリング化（ring_sz は 2^n）
+  uint ring_bits = 0;		//リングバッファを移動するカウンタを初期化
+	while ((1u << ring_bits) < ring_sz){	//リングサイズring_sz を満たす 2^ring_bits を計算
+		++ring_bits;
+	}
+  channel_config_set_ring(&c, true, ring_bits);	//書き込みアドレスを 2^ring_bits バイト境界で循環させる
+
+  dma_channel_configure(	//DMAチャンネルの設定
+		u.ch, &c,							//DMAの使用チャネルを設定
+    u.ring,								//転送先 (リング先頭)
+    src_reg,							//転送元(UART DR or PIO RXF)
+    0xFFFFFFFF,           //大きなカウントで回しっぱなし
+    true                  //設定完了後すぐ開始
+   );
+    return true;
+}
+
+
+bool uart_rx_dma_init_hw(UartRxDma& u, uart_inst_t* UARTx, uint8_t* ring_mem, size_t ring_sz) {
+    volatile void* src = (volatile void*)&uart_get_hw(UARTx)->dr;	//読み出し元をHardware UARTのDataResisterに設定
+    uint dreq = (UARTx == uart0) ? DREQ_UART0_RX : DREQ_UART1_RX;	//UART受信用のトリガを設定によって振り分け
+    return dma_rx_ring_init(u, src, dreq, ring_mem, ring_sz);	//初期化を呼ぶ
+}
+
+bool uart_rx_dma_init_pio(UartRxDma& u, PIO pio, uint sm, uint8_t* ring_mem, size_t ring_sz) {
+    volatile void* src = (volatile void*)&pio->rxf[sm];	//読み出し元をPIOのStateMachineのRX FIFOに設定
+    uint dreq = (pio == pio0) ? (DREQ_PIO0_RX0 + sm) : (DREQ_PIO1_RX0 + sm);	//PIO受信用DREQを選択
+    return dma_rx_ring_init(u, src, dreq, ring_mem, ring_sz);
+}
+
+
+// UART受信をDMAでリングバッファに流し続けるように設定する初期化関数(hard UARTのみ対応)
 bool uart_rx_dma_init(UartRxDma& u, uart_inst_t* UARTx, uint8_t* ring_mem, size_t ring_sz, uint baud){	//初期化用関数
     u.uart = UARTx;		//Hardware UARTの番号定義
 		u.ring = ring_mem;	//リングバッファ先頭アドレス

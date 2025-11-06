@@ -62,7 +62,8 @@ const uint I2C1_SDA_PIN = 14;
 const uint I2C1_SCL_PIN = 15;
 
 const uint LED_PIN = 25;
-volatile bool exeFlag = false;
+volatile bool exeFlagCore0 = false;
+volatile bool exeFlagCore1 = false;
 struct repeating_timer st_timer;
 pico_pwm pwm;
 pico_i2c i2c;
@@ -96,32 +97,37 @@ double targetDepth = DEFAULT_TARGET_DEPTH_M;
 double uartReceiveData;
 
 struct str_sensorsData logData;
-struct str_NMEA decodedNMEA;
+struct str_NMEA_GGA decodedNMEA;
 
-extern str_ULSA decodedULSA;
-
+struct str_ULSA decodedULSA;
 
 constexpr int LINE_MAX = 256;
 constexpr int QSIZE    = 16;
 static char q[QSIZE][LINE_MAX];
 static volatile uint8_t q_w=0, q_r=0;
 
-static UartRxDma g_gnss;             // UARTを1本だけDMA化
-static uint8_t  g_ring[2048];        // 2^n
+static UartRxDma g_gnss;             // UART受信用構造体
+static UartRxDma g_ulsa;             // UART受信用構造体
+static uint8_t  g_ring_gnss[2048];        // 2^n
+static uint8_t  g_ring_ulsa[2048];        // 2^n
 
-
+/*
 bool reserved_addr(uint8_t addr){
     return (addr & 0x78) == 0 || (addr & 0x78) == 0x78;
 }
 int64_t alarm_callback(alarm_id_t id, void *user_data) {
-	exeFlag = true;
+	exeFlagCore0 = true;
 	return 0;
 }
 
 bool repeating_timer_callback(struct repeating_timer *t) {
-	exeFlag = true;
+	exeFlagCore0 = true;
 	return true;
 }
+*/
+
+static bool timer_cb_core0(repeating_timer_t *t) { exeFlagCore0 = true; return true; }
+static bool timer_cb_core1(repeating_timer_t *t) { exeFlagCore1 = true; return true; }
 
 bool fifo_push(const char* s){
     uint8_t n=(q_w+1)&(QSIZE-1);
@@ -133,7 +139,9 @@ bool fifo_push(const char* s){
 
 
 void core1_main(void){
-
+	static repeating_timer_t rt1;
+	sleep_ms(50);
+	add_repeating_timer_ms(100, timer_cb_core1, NULL, &rt1);
 
   if (!sd_init_driver()) {
 		printf("ERROR: Could not initialize SD card\r\n");
@@ -197,7 +205,36 @@ void core1_main(void){
   }
 
 
-	ret = f_printf(&fil, "Internal Time, Voltage, Current, Outer Temperature,Outer Pressure,Accel X,Accel Y,Accel Z,Mag X,Mag Y,Mag Z,GPS Time,Time_seconds,NorS,Latitude,EorW,Longitude,Qual,Sats,Hdop,Altitude ASL,Altitude Geoid, ULSA id, ULSA active, ULSA direction, ULSA absoluteSpeed, ULSA noseSpeed, ULSA soundSpeed, ULSA virtualTemp\r\n");
+	ret = f_printf(&fil,	"Internal Time,"
+												"Voltage,"
+												"Current, "
+												"Outer Temperature,"
+												"Outer Pressure,"
+												"Accel X,"
+												"Accel Y,"
+												"Accel Z,"
+												"Mag X,"
+												"Mag Y,"
+												"Mag Z,"
+												"GPS Time,"
+												"Time_seconds,"
+												"NorS,"
+												"Latitude,"
+												"EorW,"
+												"Longitude,"
+												"Qual,"
+												"Sats,"
+												"Hdop,"
+												"Altitude ASL,"
+												"Altitude Geoid,"
+												"ULSA id,"
+												"ULSA active,"
+												"ULSA direction,"
+												"ULSA absoluteSpeed,"
+												"ULSA noseSpeed,"
+												"ULSA soundSpeed,"
+												"ULSA virtualTemp"
+												"\r\n");
 
 	// Close file
 	fr = f_close(&fil);
@@ -206,7 +243,7 @@ void core1_main(void){
 		while (true);
 	}
 
-	uart_rx_dma_init(g_gnss, uart0, g_ring, sizeof(g_ring), 115200);
+	uart_rx_dma_init_hw(g_gnss, uart0, g_ring_gnss, sizeof(g_ring_gnss));
 
 	multicore_fifo_push_blocking(CORE1_HELLO);
 
@@ -216,104 +253,113 @@ void core1_main(void){
 	static size_t linelen = 0;
 
 	while(1){
-		static uint32_t core1preTime;
-		static uint32_t core1postTime;
+		if(exeFlagCore1){
+			static uint32_t core1preTime;
+			static uint32_t core1postTime;
 
-		uint32_t logWriteCom = multicore_fifo_pop_blocking();
-//		size_t n = uart_rx_dma_read(uart_gnss, buf, sizeof(buf));
-		size_t n = uart_rx_dma_read(g_gnss, tmp, sizeof(tmp));
-		if (uart_is_readable(uart0)) {
-			int ch = uart_getc(uart0);
-			printf("RX peek: 0x%02X '%c'\n", ch & 0xFF, (ch>=32 && ch<127)? ch : '.');
-		}
+			uint32_t logWriteCom = multicore_fifo_pop_blocking();
+	//		size_t n = uart_rx_dma_read(uart_gnss, buf, sizeof(buf));
+			size_t n = uart_rx_dma_read(g_gnss, tmp, sizeof(tmp));
+			if (uart_is_readable(uart0)) {
+				int ch = uart_getc(uart0);
+				printf("RX peek: 0x%02X '%c'\n", ch & 0xFF, (ch>=32 && ch<127)? ch : '.');
+			}
 
-		if(n){		//新しい受信データがあったなら
-			for (size_t i = 0; i < n; i++){	//その受信データの文字数分だけ
-				char c = tmp[i];	//1文字ずつ取り出し
-        if (c == '\n') {	//改行を見つけたら
-					linebuf[linelen] = '\0'; // 1行終端(最後をnull文字にして扱いやすくする)
-//					printf("[NMEA] %s\n", linebuf);	
-          parseNMEA(linebuf); // 1行揃ったのでNMEAデコード
-          linelen = 0;              // バッファをリセット
-        }
-				else if (linelen < sizeof(linebuf) - 1) {
-					linebuf[linelen++] = c;   // まだ行区切りが来ていないのでバッファに入れ続ける
-        } 
-				else {
-          linelen = 0; //バッファが溢れたらいったんリセット
-        }
-      }
-    }
-		
-		//tight_loop_contents();  // 他処理にCPU譲渡（省電力）
+			if(n){		//新しい受信データがあったなら
+				for (size_t i = 0; i < n; i++){	//その受信データの文字数分だけ
+					char c = tmp[i];	//1文字ずつ取り出し
+					if (c == '\n') {	//改行を見つけたら
+						linebuf[linelen] = '\0'; // 1行終端(最後をnull文字にして扱いやすくする)
+	//					printf("[NMEA] %s\n", linebuf);	
+						if(checkNMEA(linebuf)){ // 1行揃ったのでNMEAチェック
+							parseNMEA_GGA(linebuf, decodedNMEA);
+						}
+						else{
+						}
+						linelen = 0;              // バッファをリセット
+					}
+					else if (linelen < sizeof(linebuf) - 1) {
+						linebuf[linelen++] = c;   // まだ行区切りが来ていないのでバッファに入れ続ける
+					} 
+					else {
+						linelen = 0; //バッファが溢れたらいったんリセット
+					}
+				}
+			}
+			
+			//tight_loop_contents();  // 他処理にCPU譲渡（省電力）
 
 
-		if(!(logWriteCom == LOG_WRITE_COM)){
-			continue;
+			if(!(logWriteCom == LOG_WRITE_COM)){
+				continue;
+			}
+			else{
+				logWriteFlag = true;
+			}
+			if(logWriteFlag){
+				core1preTime = time_us_32();
+				// Open file for writing ()
+				fr = f_open(&fil, filename, FA_WRITE | FA_OPEN_ALWAYS);
+				if (fr != FR_OK) {
+					printf("ERROR: Could not open file (%d)\r\n", fr);
+					while (true);
+				}
+					//Move to end
+				ret = f_lseek(&fil, f_size(&fil));
+				ret = f_printf(&fil, "%lu,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%c,%lf,%c,%lf,%d,%d,%lf,%lf,%lf, %d,%d,%d,%lf,%lf,%lf,%lf\r\n", 
+					logData.timeBuff_64, 
+					logData.mainVol, 
+					logData.mainCur,
+					logData.outTemp, 
+					logData.outPress,
+					logData.xAccel,
+					logData.yAccel,
+					logData.zAccel,
+					logData.xMag,
+					logData.yMag,
+					logData.zMag, 
+					decodedNMEA.time, 
+					decodedNMEA.seconds, 
+					decodedNMEA.nOrS, 
+					decodedNMEA.latitude_D, 
+					decodedNMEA.eOrW, 
+					decodedNMEA.longitude_D, 
+					decodedNMEA.qual, 
+					decodedNMEA.sats, 
+					decodedNMEA.hdop, 
+					decodedNMEA.altitudeASL, 
+					decodedNMEA.altitudeGeoid,
+					decodedULSA.id,
+					decodedULSA.active,
+					decodedULSA.direction,
+					decodedULSA.absoluteSpeed,
+					decodedULSA.noseSpeed,
+					decodedULSA.soundSpeed,
+					decodedULSA.virtualTemp
+				);
+				if (ret < 0) {
+					printf("ERROR: Could not write to file (%d)\r\n", ret);
+				 f_close(&fil);
+				 while (true);
+				}
+				// Close file
+				fr = f_close(&fil);
+				if (fr != FR_OK) {
+					printf("ERROR: Could not close file (%d)\r\n", fr);
+					while (true);
+				}
+				logWriteFlag = false;
+				core1postTime = time_us_32();
+	//			printf("Pre(core1)[ms]: %lf\n", (double)core1preTime/1000);
+	//			printf("Post(core1)[ms]: %lf\n", (double)core1postTime/1000);
+	//			printf("dt(core1)[ms]: %lf\n\n", ((double)core1postTime-(double)core1preTime)/1000);
+				
+			}
+			exeFlagCore1 = false;
 		}
 		else{
-			logWriteFlag = true;
+			tight_loop_contents();
 		}
-		if(logWriteFlag){
-			core1preTime = time_us_32();
-			// Open file for writing ()
-			fr = f_open(&fil, filename, FA_WRITE | FA_OPEN_ALWAYS);
-			if (fr != FR_OK) {
-				printf("ERROR: Could not open file (%d)\r\n", fr);
-				while (true);
-			}
-				//Move to end
-			ret = f_lseek(&fil, f_size(&fil));
-			ret = f_printf(&fil, "%lu,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%c,%lf,%c,%lf,%d,%d,%lf,%lf,%lf, %d,%d,%d,%lf,%lf,%lf,%lf\r\n", 
-				logData.timeBuff_64, 
-				logData.mainVol, 
-				logData.mainCur,
-				logData.outTemp, 
-				logData.outPress,
-				logData.xAccel,
-				logData.yAccel,
-				logData.zAccel,
-				logData.xMag,
-				logData.yMag,
-				logData.zMag, 
-				decodedNMEA.time, 
-				decodedNMEA.seconds, 
-				decodedNMEA.nOrS, 
-				decodedNMEA.latitude, 
-				decodedNMEA.eOrW, 
-				decodedNMEA.longitude, 
-				decodedNMEA.qual, 
-				decodedNMEA.sats, 
-				decodedNMEA.hdop, 
-				decodedNMEA.altitudeASL, 
-				decodedNMEA.altitudeGeoid,
-				decodedULSA.id,
-				decodedULSA.active,
-				decodedULSA.direction,
-				decodedULSA.absoluteSpeed,
-				decodedULSA.noseSpeed,
-				decodedULSA.soundSpeed,
-				decodedULSA.virtualTemp
-			);
-			if (ret < 0) {
-				printf("ERROR: Could not write to file (%d)\r\n", ret);
-	     f_close(&fil);
-	     while (true);
-			}
-			// Close file
-			fr = f_close(&fil);
-			if (fr != FR_OK) {
-				printf("ERROR: Could not close file (%d)\r\n", fr);
-				while (true);
-			}
-			logWriteFlag = false;
-			core1postTime = time_us_32();
-//			printf("Pre(core1)[ms]: %lf\n", (double)core1preTime/1000);
-//			printf("Post(core1)[ms]: %lf\n", (double)core1postTime/1000);
-//			printf("dt(core1)[ms]: %lf\n\n", ((double)core1postTime-(double)core1preTime)/1000);
-			
-		}
-	
 	}
 }
 
@@ -409,7 +455,7 @@ int main(){
 	printf("UART actual baudrate,core1 0: %d, 1: %d\n", actualBaudrate[0], actualBaudrate[1]);
 
 
-	add_repeating_timer_us(-1000/EXE_FREC*1000, repeating_timer_callback, NULL, &st_timer);
+//	add_repeating_timer_us(-1000/EXE_FREC*1000, repeating_timer_callback, NULL, &st_timer);
 
 
 	uint32_t f_pll_sys = frequency_count_khz(CLOCKS_FC0_SRC_VALUE_PLL_SYS_CLKSRC_PRIMARY);
@@ -418,6 +464,9 @@ int main(){
 	printf("\n-----\n");
 	
 	multicore_launch_core1(core1_main);
+	static repeating_timer_t rt0;
+	add_repeating_timer_ms(100, timer_cb_core0, NULL, &rt0);
+
 	uint32_t core1HelloMsg = multicore_fifo_pop_blocking();
 	while(!(core1HelloMsg == CORE1_HELLO)){
 	}
@@ -504,7 +553,7 @@ int main(){
 			rx.clearDataArrived();
 			while (rx.popLine(line, sizeof(line))) {
         fifo_push(line);  // ここでは単にコピーして保存するだけ
-				parseCsvULSA(line);
+				parseCsvULSA(line, decodedULSA);
 //				puts(line);
 			}
 		}	   
@@ -536,7 +585,7 @@ int main(){
 //		if(decodedNMEA.qual <= 1){
 //		}
 
-		if(exeFlag == false){
+		if(exeFlagCore0 == false){
 			continue;
 		}
 		
@@ -549,6 +598,6 @@ int main(){
 		INA228.readCurVolPow(i2c0, &logData.mainCur, &logData.mainVol, &logData.mainPow);
 
 		multicore_fifo_push_blocking(LOG_WRITE_COM);
-		exeFlag = false;
+		exeFlagCore0 = false;
 	}
 }

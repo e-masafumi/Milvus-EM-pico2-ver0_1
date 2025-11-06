@@ -456,17 +456,54 @@ CMakeFiles/main.dir/func-parsing.cpp.o: /home/raven/pico/works/Milvus-EM-pico2-v
   /usr/include/newlib/c++/13.2.1/arm-none-eabi/thumb/v8-m.main+fp/softfp/bits/c++config.h \
   /usr/include/newlib/c++/13.2.1/arm-none-eabi/thumb/v8-m.main+fp/softfp/bits/cpu_defines.h \
   /usr/include/newlib/c++/13.2.1/arm-none-eabi/thumb/v8-m.main+fp/softfp/bits/os_defines.h \
+  /usr/include/newlib/c++/13.2.1/bit \
+  /usr/include/newlib/c++/13.2.1/bits/concept_check.h \
+  /usr/include/newlib/c++/13.2.1/bits/cpp_type_traits.h \
+  /usr/include/newlib/c++/13.2.1/bits/exception_defines.h \
+  /usr/include/newlib/c++/13.2.1/bits/functexcept.h \
+  /usr/include/newlib/c++/13.2.1/bits/move.h \
+  /usr/include/newlib/c++/13.2.1/bits/predefined_ops.h \
+  /usr/include/newlib/c++/13.2.1/bits/ptr_traits.h \
+  /usr/include/newlib/c++/13.2.1/bits/requires_hosted.h \
+  /usr/include/newlib/c++/13.2.1/bits/specfun.h \
   /usr/include/newlib/c++/13.2.1/bits/std_abs.h \
+  /usr/include/newlib/c++/13.2.1/bits/stl_algobase.h \
+  /usr/include/newlib/c++/13.2.1/bits/stl_iterator.h \
+  /usr/include/newlib/c++/13.2.1/bits/stl_iterator_base_funcs.h \
+  /usr/include/newlib/c++/13.2.1/bits/stl_iterator_base_types.h \
+  /usr/include/newlib/c++/13.2.1/bits/stl_pair.h \
+  /usr/include/newlib/c++/13.2.1/bits/utility.h \
+  /usr/include/newlib/c++/13.2.1/cmath \
   /usr/include/newlib/c++/13.2.1/cstdint \
   /usr/include/newlib/c++/13.2.1/cstdio \
   /usr/include/newlib/c++/13.2.1/cstdlib \
   /usr/include/newlib/c++/13.2.1/cstring \
+  /usr/include/newlib/c++/13.2.1/debug/assertions.h \
+  /usr/include/newlib/c++/13.2.1/debug/debug.h \
+  /usr/include/newlib/c++/13.2.1/ext/numeric_traits.h \
+  /usr/include/newlib/c++/13.2.1/ext/type_traits.h \
+  /usr/include/newlib/c++/13.2.1/limits \
+  /usr/include/newlib/c++/13.2.1/math.h \
   /usr/include/newlib/c++/13.2.1/pstl/pstl_config.h \
   /usr/include/newlib/c++/13.2.1/stdlib.h \
+  /usr/include/newlib/c++/13.2.1/tr1/bessel_function.tcc \
+  /usr/include/newlib/c++/13.2.1/tr1/beta_function.tcc \
+  /usr/include/newlib/c++/13.2.1/tr1/ell_integral.tcc \
+  /usr/include/newlib/c++/13.2.1/tr1/exp_integral.tcc \
+  /usr/include/newlib/c++/13.2.1/tr1/gamma.tcc \
+  /usr/include/newlib/c++/13.2.1/tr1/hypergeometric.tcc \
+  /usr/include/newlib/c++/13.2.1/tr1/legendre_function.tcc \
+  /usr/include/newlib/c++/13.2.1/tr1/modified_bessel_func.tcc \
+  /usr/include/newlib/c++/13.2.1/tr1/poly_hermite.tcc \
+  /usr/include/newlib/c++/13.2.1/tr1/poly_laguerre.tcc \
+  /usr/include/newlib/c++/13.2.1/tr1/riemann_zeta.tcc \
+  /usr/include/newlib/c++/13.2.1/tr1/special_function_util.h \
+  /usr/include/newlib/c++/13.2.1/type_traits \
   /usr/include/newlib/machine/_default_types.h \
   /usr/include/newlib/machine/_types.h \
   /usr/include/newlib/machine/ieeefp.h \
   /usr/include/newlib/machine/stdlib.h \
+  /usr/include/newlib/math.h \
   /usr/include/newlib/newlib.h \
   /usr/include/newlib/stdio.h \
   /usr/include/newlib/stdlib.h \
@@ -6928,6 +6965,7 @@ CMakeFiles/main.dir/uart_dma.cpp.o: /home/raven/pico/works/Milvus-EM-pico2-ver0_
   /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/io_bank0.h \
   /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/m33.h \
   /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/pads_bank0.h \
+  /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/pio.h \
   /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/resets.h \
   /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/sio.h \
   /home/raven/pico/pico-sdk/src/rp2350/hardware_regs/include/hardware/regs/timer.h \
@@ -6940,6 +6978,7 @@ CMakeFiles/main.dir/uart_dma.cpp.o: /home/raven/pico/works/Milvus-EM-pico2-ver0_
   /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/m33.h \
   /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/nvic.h \
   /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/pads_bank0.h \
+  /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/pio.h \
   /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/resets.h \
   /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/scb.h \
   /home/raven/pico/pico-sdk/src/rp2350/hardware_structs/include/hardware/structs/sio.h \
@@ -6953,6 +6992,8 @@ CMakeFiles/main.dir/uart_dma.cpp.o: /home/raven/pico/works/Milvus-EM-pico2-ver0_
   /home/raven/pico/pico-sdk/src/rp2_common/hardware_gpio/include/hardware/gpio.h \
   /home/raven/pico/pico-sdk/src/rp2_common/hardware_gpio/include/hardware/gpio_coproc.h \
   /home/raven/pico/pico-sdk/src/rp2_common/hardware_irq/include/hardware/irq.h \
+  /home/raven/pico/pico-sdk/src/rp2_common/hardware_pio/include/hardware/pio.h \
+  /home/raven/pico/pico-sdk/src/rp2_common/hardware_pio/include/hardware/pio_instructions.h \
   /home/raven/pico/pico-sdk/src/rp2_common/hardware_resets/include/hardware/resets.h \
   /home/raven/pico/pico-sdk/src/rp2_common/hardware_timer/include/hardware/timer.h \
   /home/raven/pico/pico-sdk/src/rp2_common/hardware_uart/include/hardware/uart.h \

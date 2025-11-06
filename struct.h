@@ -18,20 +18,28 @@ struct str_sensorsData{
 	double zMag=0.0;
 };
 
-struct str_NMEA{
+struct str_NMEA_GGA{
+	char type[6];
 	int hours;
 	int minutes;
 	double seconds;
 	double time;
-	double latitude;
+	double latitude_DM;
+	double latitude_D;
 	char nOrS;
-	double longitude;
+	double longitude_DM;
+	double longitude_D;
 	char eOrW;
 	int qual;
 	int sats;
 	double hdop;
 	double altitudeASL;
+	char altitudeASL_Unit;
 	double altitudeGeoid;
+	char altitudeGeoid_Unit;
+	double age;
+	int id;
+	char checkSum[3];
 };
 
 struct str_ULSA{
