@@ -54,6 +54,8 @@
 #define SERIAL_BAUD_PIO 115200
 #define PIO_RX_PIN 3
 
+#define EXPAND_SIZE 500*1000*1000
+
 using namespace std;
 
 const uint I2C0_SDA_PIN = 8;
@@ -204,44 +206,30 @@ void core1_main(void){
     while (true);
   }
 
+	f_expand(&fil, EXPAND_SIZE, 1);	//連続領域確保
 
-	ret = f_printf(&fil,	"Internal Time,"
-												"Voltage,"
-												"Current, "
-												"Outer Temperature,"
-												"Outer Pressure,"
-												"Accel X,"
-												"Accel Y,"
-												"Accel Z,"
-												"Mag X,"
-												"Mag Y,"
-												"Mag Z,"
-												"GPS Time,"
-												"Time_seconds,"
-												"NorS,"
-												"Latitude,"
-												"EorW,"
-												"Longitude,"
-												"Qual,"
-												"Sats,"
-												"Hdop,"
-												"Altitude ASL,"
-												"Altitude Geoid,"
-												"ULSA id,"
-												"ULSA active,"
-												"ULSA direction,"
-												"ULSA absoluteSpeed,"
-												"ULSA noseSpeed,"
-												"ULSA soundSpeed,"
-												"ULSA virtualTemp"
-												"\r\n");
-
-	// Close file
-	fr = f_close(&fil);
+	char sdInitLine[512];
+	UINT sdInitBw;
+	int sdInitLength = snprintf(sdInitLine,sizeof(sdInitLine),	"Internal Time, Voltage,Current,Outer Temperature,Outer Pressure,Accel X,Accel Y,Accel Z,Mag X,Mag Y,Mag Z,GNSS NMEA Type,GNSS Time,GNSS Time_hours,GNSS Time_minutes,GNSS Time_seconds,GNSS Latitude_DM,GNSS Latitude_D,GNSS NorS,GNSS Longitude_DM,GNSS Longitude_D,GNSS EorW,GNSS Qual,GNSS Sats,GNSS Hdop,GNSS Altitude ASL,GNSS Altitude ASL Unit,GNSS Altitude Geoid,GNSS Altitude Geoid Unit,GNSS Age,GNSS ID,GNSS CheckSum,ULSA id,ULSA active,ULSA direction,ULSA absoluteSpeed,ULSA noseSpeed,ULSA soundSpeed,ULSA virtualTemp\r\n");
+	FRESULT sdInitfr = f_write(&fil, sdInitLine, sdInitLength, &sdInitBw);
+	if (ret < 0) {
+		printf("ERROR: Could not write to file (%d)\r\n", ret);
+		f_close(&fil);
+		while (true);
+	}
+	//Sync file
+	fr = f_sync(&fil);
 	if (fr != FR_OK) {
 		printf("ERROR: Could not close file (%d)\r\n", fr);
 		while (true);
 	}
+
+	// Close file
+//	fr = f_close(&fil);
+//	if (fr != FR_OK) {
+//		printf("ERROR: Could not close file (%d)\r\n", fr);
+//		while (true);
+//	}
 
 	uart_rx_dma_init_hw(g_gnss, uart0, g_ring_gnss, sizeof(g_ring_gnss));
 
@@ -251,26 +239,34 @@ void core1_main(void){
 	static uint8_t tmp[256];	
 	static char linebuf[256];
 	static size_t linelen = 0;
+	fr = f_open(&fil, filename, FA_WRITE | FA_OPEN_ALWAYS);
+	if (fr != FR_OK) {
+		printf("ERROR: Could not open file (%d)\r\n", fr);
+		while (true);
+	}
+
+	//Move to end
+	ret = f_lseek(&fil, f_size(&fil));
 
 	while(1){
 		if(exeFlagCore1){
 			static uint32_t core1preTime;
 			static uint32_t core1postTime;
 
-			uint32_t logWriteCom = multicore_fifo_pop_blocking();
+	//		uint32_t logWriteCom = multicore_fifo_pop_blocking();
 	//		size_t n = uart_rx_dma_read(uart_gnss, buf, sizeof(buf));
 			size_t n = uart_rx_dma_read(g_gnss, tmp, sizeof(tmp));
-			if (uart_is_readable(uart0)) {
-				int ch = uart_getc(uart0);
-				printf("RX peek: 0x%02X '%c'\n", ch & 0xFF, (ch>=32 && ch<127)? ch : '.');
-			}
+//			if (uart_is_readable(uart0)) {
+//				int ch = uart_getc(uart0);
+//				printf("RX peek: 0x%02X '%c'\n", ch & 0xFF, (ch>=32 && ch<127)? ch : '.');
+//			}
 
 			if(n){		//新しい受信データがあったなら
 				for (size_t i = 0; i < n; i++){	//その受信データの文字数分だけ
 					char c = tmp[i];	//1文字ずつ取り出し
 					if (c == '\n') {	//改行を見つけたら
 						linebuf[linelen] = '\0'; // 1行終端(最後をnull文字にして扱いやすくする)
-	//					printf("[NMEA] %s\n", linebuf);	
+//						printf("[NMEA] %s\n", linebuf);	
 						if(checkNMEA(linebuf)){ // 1行揃ったのでNMEAチェック
 							parseNMEA_GGA(linebuf, decodedNMEA);
 						}
@@ -286,75 +282,49 @@ void core1_main(void){
 					}
 				}
 			}
-			
 			//tight_loop_contents();  // 他処理にCPU譲渡（省電力）
 
 
-			if(!(logWriteCom == LOG_WRITE_COM)){
-				continue;
+//			if(!(logWriteCom == LOG_WRITE_COM)){
+//				continue;
+//			}
+//			else{
+//				logWriteFlag = true;
+//			}
+//			if(logWriteFlag){
+//			core1preTime = time_us_64();
+			// Open file for writing ()
+			char line[512];
+			UINT bw;
+			int length = snprintf(line, sizeof(line),"%llu,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%s,%lf,%d,%d,%lf,%lf,%lf,%c,%lf,%lf,%c,%d,%d,%lf,%lf,%c,%lf,%c,%lf,%d,%s,%d,%d,%d,%lf,%lf,%lf,%lf\r\n",
+			logData.timeBuff_64,logData.mainVol,logData.mainCur,logData.outTemp,logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag,decodedNMEA.type,decodedNMEA.time,decodedNMEA.hours,decodedNMEA.minutes,decodedNMEA.seconds,decodedNMEA.latitude_DM,decodedNMEA.latitude_D,decodedNMEA.nOrS,decodedNMEA.longitude_DM,decodedNMEA.longitude_D,decodedNMEA.eOrW,decodedNMEA.qual,decodedNMEA.sats,decodedNMEA.hdop,decodedNMEA.altitudeASL,decodedNMEA.altitudeASL_Unit,decodedNMEA.altitudeGeoid,decodedNMEA.altitudeGeoid_Unit,decodedNMEA.age,decodedNMEA.id,decodedNMEA.checkSum,decodedULSA.id,decodedULSA.active,decodedULSA.direction,decodedULSA.absoluteSpeed,decodedULSA.noseSpeed,decodedULSA.soundSpeed,decodedULSA.virtualTemp);
+//			ret = f_printf(&fil, "%lu,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%s,%lf,%lf,%c,%lf,%c,%lf,%d,%d,%lf,%lf,%lf, %d,%d,%d,%lf,%lf,%lf,%lf\r\n", 
+			FRESULT fr = f_write(&fil, line, length, &bw);
+			if (ret < 0) {
+				printf("ERROR: Could not write to file (%d)\r\n", ret);
+				f_close(&fil);
+				while (true);
 			}
-			else{
-				logWriteFlag = true;
+			//Sync file
+			fr = f_sync(&fil);
+			if (fr != FR_OK) {
+				printf("ERROR: Could not close file (%d)\r\n", fr);
+				while (true);
 			}
-			if(logWriteFlag){
-				core1preTime = time_us_32();
-				// Open file for writing ()
-				fr = f_open(&fil, filename, FA_WRITE | FA_OPEN_ALWAYS);
-				if (fr != FR_OK) {
-					printf("ERROR: Could not open file (%d)\r\n", fr);
-					while (true);
-				}
-					//Move to end
-				ret = f_lseek(&fil, f_size(&fil));
-				ret = f_printf(&fil, "%lu,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%c,%lf,%c,%lf,%d,%d,%lf,%lf,%lf, %d,%d,%d,%lf,%lf,%lf,%lf\r\n", 
-					logData.timeBuff_64, 
-					logData.mainVol, 
-					logData.mainCur,
-					logData.outTemp, 
-					logData.outPress,
-					logData.xAccel,
-					logData.yAccel,
-					logData.zAccel,
-					logData.xMag,
-					logData.yMag,
-					logData.zMag, 
-					decodedNMEA.time, 
-					decodedNMEA.seconds, 
-					decodedNMEA.nOrS, 
-					decodedNMEA.latitude_D, 
-					decodedNMEA.eOrW, 
-					decodedNMEA.longitude_D, 
-					decodedNMEA.qual, 
-					decodedNMEA.sats, 
-					decodedNMEA.hdop, 
-					decodedNMEA.altitudeASL, 
-					decodedNMEA.altitudeGeoid,
-					decodedULSA.id,
-					decodedULSA.active,
-					decodedULSA.direction,
-					decodedULSA.absoluteSpeed,
-					decodedULSA.noseSpeed,
-					decodedULSA.soundSpeed,
-					decodedULSA.virtualTemp
-				);
-				if (ret < 0) {
-					printf("ERROR: Could not write to file (%d)\r\n", ret);
-				 f_close(&fil);
-				 while (true);
-				}
+			
+
 				// Close file
-				fr = f_close(&fil);
-				if (fr != FR_OK) {
-					printf("ERROR: Could not close file (%d)\r\n", fr);
-					while (true);
-				}
-				logWriteFlag = false;
-				core1postTime = time_us_32();
+//			fr = f_close(&fil);
+//			if (fr != FR_OK) {
+//				printf("ERROR: Could not close file (%d)\r\n", fr);
+//				while (true);
+//			}
+//			logWriteFlag = false;
+//			core1postTime = time_us_64();
 	//			printf("Pre(core1)[ms]: %lf\n", (double)core1preTime/1000);
 	//			printf("Post(core1)[ms]: %lf\n", (double)core1postTime/1000);
 	//			printf("dt(core1)[ms]: %lf\n\n", ((double)core1postTime-(double)core1preTime)/1000);
 				
-			}
 			exeFlagCore1 = false;
 		}
 		else{
@@ -377,7 +347,7 @@ int main(){
 	uint sm;
 	uint offset;
 
-	sem_init(&sem, 1, 1);
+//	sem_init(&sem, 1, 1);
 	printf("start");
 	stdio_init_all();
 	pwm.setup();
@@ -405,9 +375,9 @@ int main(){
 	sleep_ms(500);
 
 
-  bool success = pio_claim_free_sm_and_add_program_for_gpio_range(&uart_rx_program, &pio, &sm, &offset, PIO_RX_PIN, 1, true);
-  hard_assert(success);
-	uart_rx_program_init(pio, sm, offset, PIO_RX_PIN, SERIAL_BAUD_PIO);
+//  bool success = pio_claim_free_sm_and_add_program_for_gpio_range(&uart_rx_program, &pio, &sm, &offset, PIO_RX_PIN, 1, true);
+//  hard_assert(success);
+//	uart_rx_program_init(pio, sm, offset, PIO_RX_PIN, SERIAL_BAUD_PIO);
 
 
 	BNO055.setup(i2c1);
@@ -467,10 +437,10 @@ int main(){
 	static repeating_timer_t rt0;
 	add_repeating_timer_ms(100, timer_cb_core0, NULL, &rt0);
 
-	uint32_t core1HelloMsg = multicore_fifo_pop_blocking();
-	while(!(core1HelloMsg == CORE1_HELLO)){
-	}
-	printf("hello: %d\n", core1HelloMsg);
+//	uint32_t core1HelloMsg = multicore_fifo_pop_blocking();
+//	while(!(core1HelloMsg == CORE1_HELLO)){
+//	}
+//	printf("hello: %d\n", core1HelloMsg);
 	
 
 	uint32_t volErrorCnt;
@@ -541,22 +511,23 @@ int main(){
 		}
 	}
 */
-	double targetPress = (DEFAULT_TARGET_DEPTH_M*1013*10)+pSurface;
-	static uint32_t preTime = time_us_32();
-	static uint32_t nowTime = time_us_32();
+//	double targetPress = (DEFAULT_TARGET_DEPTH_M*1013*10)+pSurface;
+	static uint32_t preTime = time_us_64();
+	static uint32_t nowTime = time_us_64();
 
-	PioUartRx rx(pio0, /*sm*/0, /*RX GPIO*/3, /*baud*/115200);
-	char line[256];
+//	PioUartRx rx(pio0, /*sm*/0, /*RX GPIO*/3, /*baud*/115200);
+//	char line[256];
 
 	while(1){	//main loop
-		if (rx.dataArrived()) {
-			rx.clearDataArrived();
-			while (rx.popLine(line, sizeof(line))) {
-        fifo_push(line);  // ここでは単にコピーして保存するだけ
-				parseCsvULSA(line, decodedULSA);
+		if(exeFlagCore0){
+//		if (rx.dataArrived()) {
+//			rx.clearDataArrived();
+//			while (rx.popLine(line, sizeof(line))) {
+//       fifo_push(line);  // ここでは単にコピーして保存するだけ
+//				parseCsvULSA(line, decodedULSA);
 //				puts(line);
-			}
-		}	   
+//			}
+//		}	   
 		
 //		if(messageFinishFlag == true){
 //			messageFinishFlag = false;
@@ -584,20 +555,20 @@ int main(){
 
 //		if(decodedNMEA.qual <= 1){
 //		}
-
-		if(exeFlagCore0 == false){
-			continue;
-		}
 		
-		nowTime = time_us_32();
-		preTime = time_us_32();
+			nowTime = time_us_64();
+			preTime = time_us_64();
 
-		logData.timeBuff_64 = time_us_64();
-		BNO055.readAccel(i2c1, &logData.xAccel, &logData.yAccel, &logData.zAccel);
-		BNO055.readMag(i2c1, &logData.xMag, &logData.yMag, &logData.zMag);
-		INA228.readCurVolPow(i2c0, &logData.mainCur, &logData.mainVol, &logData.mainPow);
+			logData.timeBuff_64 = time_us_64();
+			BNO055.readAccel(i2c1, &logData.xAccel, &logData.yAccel, &logData.zAccel);
+			BNO055.readMag(i2c1, &logData.xMag, &logData.yMag, &logData.zMag);
+//			INA228.readCurVolPow(i2c0, &logData.mainCur, &logData.mainVol, &logData.mainPow);
 
-		multicore_fifo_push_blocking(LOG_WRITE_COM);
-		exeFlagCore0 = false;
+//		multicore_fifo_push_blocking(LOG_WRITE_COM);
+			exeFlagCore0 = false;
+		}
+		else{
+			tight_loop_contents();
+		}
 	}
 }

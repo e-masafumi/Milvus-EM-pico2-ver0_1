@@ -9,8 +9,17 @@
 #include "hardware/dma.h"
 #include "hardware/irq.h"
 
-// ▼ 公式サンプルの uart_rx.pio から生成されるヘッダ（リポにあるやつを使います）
+//自動生成ヘッダ
 #include "uart_rx.pio.h"
+
+
+
+int pio_uart_init(PIO pio, uint sm, uint rx_gpio_pin, uint baudrate);
+
+
+
+/////+++++以下はHard UARTとのDMA共通化以前なので使ってない+++++/////
+
 
 // 受信: PIO + DMAリング + 「データ到着」IRQ（行終端はCPU側で '\n' 検出）
 // 行のフォーマット例: "#foo,bar,baz\n" （先頭 '#'、末尾 LF。CR は自動除去）

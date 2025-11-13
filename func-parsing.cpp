@@ -65,7 +65,7 @@ bool checkNMEA(const char* line){
   strncpy(buf, line, sizeof(buf));
 	buf[sizeof(buf) - 1] = '\0';	//終端保証
 	
-	const char* p = buf;	//$の次から読む
+	char* p = buf;	//$の次から読む
 	
 	while(*p == ' ' || *p == '\t'){ //空白があったらスキップ
 		++p;
@@ -115,7 +115,10 @@ bool parseNMEA_GGA(const char* line, str_NMEA_GGA& ggabuf) {
 	char buf[256];
   strncpy(buf, line, sizeof(buf));
 
-  char* token = strtok(buf, ",");
+	char *p_buf = buf;
+	char *token = strsep(&p_buf, ",");
+
+//  char* token = strtok(buf, ",");
   int   index = 0;
   
 	if (token && strlen(token) >= 6 && strcmp(token + 3, "GGA") == 0) {
@@ -184,7 +187,8 @@ bool parseNMEA_GGA(const char* line, str_NMEA_GGA& ggabuf) {
 			}
 			
 			index++; 
-			token = strtok(nullptr, ",");  // 次のカンマ区切りへ
+//			token = strtok(nullptr, ",");  // 次のカンマ区切りへ
+			token = strsep(&p_buf, ",");  // 次のカンマ区切りへ
 		}
 	}
 	else{

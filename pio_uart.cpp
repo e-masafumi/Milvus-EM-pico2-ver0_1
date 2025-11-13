@@ -2,6 +2,32 @@
 #include <cstring>
 #include <cstdlib>
 
+
+
+int pio_uart_init(PIO pio, uint sm, uint rx_gpio_pin, uint baudrate){
+	if (!pio_can_add_program(pio, &uart_rx_program)){	//PIO内部の命令メモリに空きがあるか確認
+		return -1;
+	}
+	uint offset = pio_add_program(pio, &uart_rx_program); //PIOプログラムロード
+	pio_sm_config c = pio_get_default_sm_config();	//StateMachineのconfig作成(default設定の読み込み)
+	sm_config_set_wrap(&c, offset + uart_rx_wrap_target, offset + uart_rx_wrap);	//StateMachine設定用のラッパ
+	pio_sm_set_consecutive_pindirs(pio, sm, rx_gpio_pin, 1, false);	//rxのピン設定, 最後のfalseで入力に設定
+	sm_config_set_in_pins(&c, rx_gpio_pin);	//StateMachineの入力ピンを設定
+	float div = (float)clock_get_hz(clk_sys) / (float)baudrate;	//1bitあたりのクロック数計算
+	sm_config_set_clkdiv(&c, div);	//クロック分周設定
+	sm_config_set_in_shift(&c, /*shift_right=*/true, /*autopush=*/true, /*threshold=*/8);	//8bit(1byte)たまったら自動的にFIFOにPUSH．shift_rightがtrueなのでLSB→MSB順にする．
+	sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_RX);	//RXとTXで8ワード分あるFIFOメモリ空間をRXのみで8ワード使わせる(TXは殺す)．
+	pio_sm_init(pio, sm, offset /*entry*/, &c);	//StateMachine初期化
+	pio_sm_set_enabled(pio, sm, true);	//StateMachine動作開始
+	return 0;
+}
+
+
+/////+++++以下はHard UARTとのDMA共通化以前なので使ってない+++++/////
+
+
+
+
 // 静的メンバ定義(IRQからは静的関数しか呼べないため,他アドレスに干渉しないようにヌルポインタ)
 PioUartRx* PioUartRx::g_pio0_irq0_inst_ = nullptr;
 PioUartRx* PioUartRx::g_pio1_irq0_inst_ = nullptr;
