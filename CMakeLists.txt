@@ -23,6 +23,13 @@ add_executable(main
 	uart_dma.cpp
 )
 
+add_compile_options(
+    -Wall
+    -Wextra
+    -Wformat=2
+)
+
+
 pico_generate_pio_header(main ${CMAKE_CURRENT_LIST_DIR}/uart_rx.pio)
 
 add_subdirectory(lib/no-OS-FatFs/src)

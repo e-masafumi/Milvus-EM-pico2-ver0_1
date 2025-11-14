@@ -54,7 +54,7 @@
 #define SERIAL_BAUD_PIO 115200
 #define PIO_RX_PIN 3
 
-#define EXPAND_SIZE 500*1000*1000
+#define EXPAND_SIZE 100*1000*1000
 
 using namespace std;
 
@@ -91,7 +91,12 @@ int startCnt = 0;
 FRESULT fr;
 FATFS fs;
 FIL fil;
+DIR dir;
+FILINFO fno;
 int ret;
+int max_id = -1;
+int next_id = -1;
+ 
 char buf[100];
 char filename[] = "log.txt";
 double thrusterOutput[4] = {0, 0, 0, 0};
@@ -156,55 +161,45 @@ void core1_main(void){
 		while (true);
   }
 
-	fr = f_open(&fil, filename, FA_WRITE | FA_CREATE_ALWAYS);
-	if (fr != FR_OK) {
-		printf("ERROR: Could not open file (%d)\r\n", fr);
+	fr = f_opendir(&dir, "0:/");	//0:は最初にmountされたドライブの一番上
+  if (fr != FR_OK) {
+		printf("ERROR: Could not open directory (%d)\r\n", fr);
 		while (true);
-  }
+	}  	
 
-  ret = f_printf(&fil, "Test\r\n");
-	if (ret < 0) {
-		printf("ERROR: Could not write to file (%d)\r\n", ret);
-		f_close(&fil);
-		while (true);
+	while(1){
+		if (f_readdir(&dir, &fno) != FR_OK || fno.fname[0] == 0){
+			break; // 読み終わり
+		}
+    // "log_123.txt" の形式をチェック
+		if (strncmp(fno.fname, "log_", 4) == 0) {
+			int id = atoi(&fno.fname[4]);
+			if (id > max_id){
+				max_id = id;
+			}
+    }
 	}
-    // Close file
-  fr = f_close(&fil);
-  if (fr != FR_OK) {
-		printf("ERROR: Could not close file (%d)\r\n", fr);
-    while (true);
-  }
-
-  // Open file for reading
-  fr = f_open(&fil, filename, FA_READ);
-  if (fr != FR_OK) {
-		printf("ERROR: Could not open file (%d)\r\n", fr);
-    while (true);
-  }
-
-    // Print every line in file over serial
-	printf("Reading from file '%s':\r\n", filename);
-  printf("---\r\n");
-  while (f_gets(buf, sizeof(buf), &fil)) {
-		printf(buf);
-  }
-  printf("\r\n---\r\n");
-
-  // Close file
-  fr = f_close(&fil);
-  if (fr != FR_OK) {
-		printf("ERROR: Could not close file (%d)\r\n", fr);
-		while (true);
-  }
-
-    // Unmount drive
-//    f_unmount("0:");
-    // Open file for writing ()
-	fr = f_open(&fil, filename, FA_WRITE | FA_CREATE_ALWAYS);
-	if (fr != FR_OK) {
-		printf("ERROR: Could not open file (%d)\r\n", fr);
-    while (true);
-  }
+  
+	f_closedir(&dir);	
+	
+	if(max_id < 0){
+		next_id = 0;
+	}
+	else{
+		next_id = max_id+1;
+	}
+	
+	printf("File number MAX = %d\n", max_id);
+	printf("File number NEXT = %d\n", next_id);
+	
+for (int i = 0; i < 100; i++) {
+		sprintf(filename, "log_%03d.txt", next_id);
+		fr = f_open(&fil, filename, FA_WRITE | FA_CREATE_NEW);
+		if (fr == FR_OK){
+			break;
+		}
+		next_id++;
+	}
 
 	f_expand(&fil, EXPAND_SIZE, 1);	//連続領域確保
 
@@ -239,14 +234,14 @@ void core1_main(void){
 	static uint8_t tmp[256];	
 	static char linebuf[256];
 	static size_t linelen = 0;
-	fr = f_open(&fil, filename, FA_WRITE | FA_OPEN_ALWAYS);
-	if (fr != FR_OK) {
-		printf("ERROR: Could not open file (%d)\r\n", fr);
-		while (true);
-	}
+//	fr = f_open(&fil, filename, FA_WRITE | FA_OPEN_ALWAYS);
+//	if (fr != FR_OK) {
+//		printf("ERROR: Could not open file (%d)\r\n", fr);
+//		while (true);
+//	}
 
 	//Move to end
-	ret = f_lseek(&fil, f_size(&fil));
+//	ret = f_lseek(&fil, f_size(&fil));
 
 	while(1){
 		if(exeFlagCore1){
@@ -300,6 +295,7 @@ void core1_main(void){
 			logData.timeBuff_64,logData.mainVol,logData.mainCur,logData.outTemp,logData.outPress,logData.xAccel,logData.yAccel,logData.zAccel,logData.xMag,logData.yMag,logData.zMag,decodedNMEA.type,decodedNMEA.time,decodedNMEA.hours,decodedNMEA.minutes,decodedNMEA.seconds,decodedNMEA.latitude_DM,decodedNMEA.latitude_D,decodedNMEA.nOrS,decodedNMEA.longitude_DM,decodedNMEA.longitude_D,decodedNMEA.eOrW,decodedNMEA.qual,decodedNMEA.sats,decodedNMEA.hdop,decodedNMEA.altitudeASL,decodedNMEA.altitudeASL_Unit,decodedNMEA.altitudeGeoid,decodedNMEA.altitudeGeoid_Unit,decodedNMEA.age,decodedNMEA.id,decodedNMEA.checkSum,decodedULSA.id,decodedULSA.active,decodedULSA.direction,decodedULSA.absoluteSpeed,decodedULSA.noseSpeed,decodedULSA.soundSpeed,decodedULSA.virtualTemp);
 //			ret = f_printf(&fil, "%lu,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%s,%lf,%lf,%c,%lf,%c,%lf,%d,%d,%lf,%lf,%lf, %d,%d,%d,%lf,%lf,%lf,%lf\r\n", 
 			FRESULT fr = f_write(&fil, line, length, &bw);
+			printf("time=%llu\n",time_us_64());
 			if (ret < 0) {
 				printf("ERROR: Could not write to file (%d)\r\n", ret);
 				f_close(&fil);
